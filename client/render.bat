@@ -1,0 +1,1 @@
+hero -source="./" -dest="./" -extensions=".html" -pkgname="client" -watch
