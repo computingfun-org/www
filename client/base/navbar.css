@@ -1,0 +1,23 @@
+.navbar {
+    position: fixed;
+    top: 0px;
+    left: -240px;
+    transition: all 0.3s;
+    background-color: black;
+    height: 100%;
+    width: 250px;
+}
+
+.navbar:hover{
+    left: 0px;
+    background-color: white;
+}
+
+.navbar .icon {
+    position: relative;
+    top: 5px;
+    left: 500px;
+    position: sticky;
+    border-radius: 99px;
+    background-color: inherit;
+}

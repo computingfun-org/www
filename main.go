@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
+	"gitlab.com/computingfun/computingfun.org/html"
 	"golang.org/x/crypto/acme/autocert"
 )
 
@@ -14,7 +15,7 @@ func main() {
 	router.NotFound = notFoundHandler()
 	router.GET("/", indexHandler)
 	router.GET("/game", gameHandler)
-	router.ServeFiles("/client/*filepath", http.Dir("./static"))
+	router.ServeFiles("/client/*filepath", http.Dir("./client"))
 
 	cert := autocert.Manager{
 		Cache:      autocert.DirCache("autocert"),
@@ -38,7 +39,7 @@ func notFoundHandler() http.HandlerFunc {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-
+	html.Index(w)
 }
 
 func gameHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
