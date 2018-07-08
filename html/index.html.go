@@ -23,13 +23,14 @@ func Index(w io.Writer) (int, error) {
         <link rel="icon" href="/client/base/icon.svg">
         `)
 	_buffer.WriteString(`
+        <link rel="stylesheet" type="text/css" href="/client/base/body.css">
         <link rel="stylesheet" type="text/css" href="/client/base/navbar.css">
         `)
 	_buffer.WriteString(`
     </head>
     <body>
         <div class="navbar">
-            <a href="#"><img src="/client/base/icon.svg" alt="Computing Fun" height="40" width="40" class="icon"></a>
+            <a href="#"><img src="/client/base/icon.svg" alt="Computing Fun" height="50" width="50" class="icon"></a>
             <a href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA" class="navbar-links-youtube">YouTube<i class="material-icons">subscriptions</i></a>
         </div>
         `)
