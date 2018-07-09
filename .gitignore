@@ -16,3 +16,6 @@ bin/
 
 # Autocert cache folder
 autocert/
+
+# Hero complied HTML
+*.html.go
