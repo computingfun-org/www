@@ -1,5 +1,10 @@
 body {
-    background-color: #8dc63f1a;
-    padding-left: 25px;
-    padding-right: 25px;
+    background-color: whitesmoke;
+}
+
+.content {
+    margin: auto;
+    width: 90%;
+    background-color: blue;
+    z-index: 0;
 }

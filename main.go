@@ -1,47 +1,44 @@
 package main
 
 import (
-	"crypto/tls"
 	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
 	"gitlab.com/computingfun/computingfun.org/html"
-	"golang.org/x/crypto/acme/autocert"
 )
 
 func main() {
 	router := httprouter.New()
-	router.NotFound = notFoundHandler()
+	router.NotFound = newNotFoundHandler()
 	router.GET("/", indexHandler)
-	router.GET("/game", gameHandler)
 	router.ServeFiles("/client/*filepath", http.Dir("./client"))
 
-	cert := autocert.Manager{
-		Cache:      autocert.DirCache("autocert"),
-		Prompt:     autocert.AcceptTOS,
-		HostPolicy: autocert.HostWhitelist("computingfun.org", "www.computingfun.org"),
-	}
+	/*
+		cert := autocert.Manager{
+			Cache:      autocert.DirCache("autocert"),
+			Prompt:     autocert.AcceptTOS,
+			HostPolicy: autocert.HostWhitelist("computingfun.org", "www.computingfun.org"),
+		}
+	*/
 
 	server := http.Server{
-		Handler:   router,
-		TLSConfig: &tls.Config{GetCertificate: cert.GetCertificate},
+		Handler: router,
+		//TLSConfig: &tls.Config{GetCertificate: cert.GetCertificate},
 	}
 
-	go http.ListenAndServe("", cert.HTTPHandler(nil))
-	log.Fatalln(server.ListenAndServeTLS("", ""))
+	//go http.ListenAndServe("", cert.HTTPHandler(nil))
+	//log.Fatalln(server.ListenAndServeTLS("", ""))
+	log.Fatalln(server.ListenAndServe())
 }
 
-func notFoundHandler() http.HandlerFunc {
+func newNotFoundHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
+		w.WriteHeader(http.StatusNotFound)
+		html.NotFound(w)
 	}
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	html.Index(w)
-}
-
-func gameHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-
 }
