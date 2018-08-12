@@ -1,21 +1,33 @@
 package articles
 
 import (
+	"database/sql"
 	"os"
 	"testing"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // TestSQLiteStore use to test common use cases for SQLiteStore.
 func TestSQLiteStore(t *testing.T) {
-	TestDBPath := "./test.db"
-	os.Remove(TestDBPath)
+	defer os.Remove("./test.db")
+	db, err := sql.Open("sqlite3", "./test.db")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer db.Close()
 
-	s, err := NewSQLiteStore("TestArticles", TestDBPath)
+	se, err := NewSQLiteStore(db, "")
+	if err == nil {
+		t.Fatal("Table name shouldn't allow empty sting.")
+		se.Close()
+	}
+
+	s, err := NewSQLiteStore(db, "TestArticles")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer s.Close()
-	defer os.Remove(TestDBPath)
 
 	a1 := &Article{Title: "Title1", Details: "Details1", Content: "Content1"}
 	a2 := &Article{Title: "Title2", Details: "Details2", Content: "Content2"}
@@ -68,12 +80,12 @@ func TestSQLiteStore(t *testing.T) {
 		t.Error("ID3 being receive supposed to error")
 	}
 
-	err = s.Close()
-	if err != nil {
-		t.Error(err)
+	err = s.Add(&Article{Title: "T", Details: "D", Content: "C"}, "")
+	if err == nil {
+		t.Error("Empty sting shouldn't be allowed as id")
 	}
 
-	err = os.Remove(TestDBPath)
+	err = s.Close()
 	if err != nil {
 		t.Error(err)
 	}
