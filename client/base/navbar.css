@@ -60,6 +60,7 @@
     float: left;
     border-radius: 0px 10px 10px 0px;
     text-align: center;
+    overflow: hidden;
 }
 
 .navbar-link i {
@@ -79,8 +80,11 @@
 
 @media only screen and (max-width: 600px) {
     .navbar-link {
-        width: 250px;
-        border-radius: 0px;
+        width: 240px;
+    }
+
+    .navbar:hover .navbar-link {
+        width: 275px;
     }
 
     .navbar-link:hover {

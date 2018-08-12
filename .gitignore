@@ -19,3 +19,6 @@ autocert/
 
 # Test database
 test.db
+
+# Database
+cf.db

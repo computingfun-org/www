@@ -4,7 +4,8 @@ body {
 
 .content {
     margin: auto;
+    padding-left: 50px;
+    padding-right: 50px;
     width: 90%;
-    background-color: blue;
     z-index: 0;
 }

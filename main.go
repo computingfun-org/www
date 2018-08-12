@@ -14,16 +14,15 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// ArticleStore is the storage for articles
+// ArticleStore is the storage for articles.
 var ArticleStore articles.Store
 
 func main() {
-	var err error
-
 	handler := httprouter.New()
-	handler.NotFound = NotFoundHandlerWrapper()
+	handler.PanicHandler = PanicHandler
+	handler.NotFound = GetNotFoundHandler()
 	handler.GET("/", IndexHandler)
-	handler.GET("/article/:id", ArticleHandler)
+	handler.GET("/articles/:id", ArticleHandler)
 	handler.ServeFiles("/client/*filepath", http.Dir("./client"))
 
 	db, err := sql.Open("sqlite3", "./cf.db")
@@ -53,30 +52,37 @@ func main() {
 	log.Fatalln(server.ListenAndServeTLS("", ""))
 }
 
-// NotFoundHandlerWrapper just returns NotFoundHandler.
-// Used because httprouter rounter's NotFound won't take NotFoundHandler without this wrapper func.
-func NotFoundHandlerWrapper() http.HandlerFunc {
-	return NotFoundHandler
-}
-
-// NotFoundHandler responses with the 404 error page.
+// NotFoundHandler responses with the NotFound error page (404 status code).
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	html.NotFound(w)
 }
 
-// IndexHandler responses with the home page.
-func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	html.Index(w)
+// GetNotFoundHandler just returns NotFoundHandler.
+// Used because httprouter rounter's NotFound won't take NotFoundHandler without this getter func.
+func GetNotFoundHandler() http.HandlerFunc {
+	return NotFoundHandler
 }
 
-// ArticleHandler responses with an article with the id [:id].
+// PanicHandler responses with the Panic error page (500 status code) and logs its.
+func PanicHandler(w http.ResponseWriter, r *http.Request, i interface{}) {
+	log.Println("Panic: ", i, " | Request: ", r, " | Response: ", w)
+	w.WriteHeader(http.StatusInternalServerError)
+	html.Panic(w)
+}
+
+// IndexHandler responses with the home page.
+func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	html.ComingSoon(w)
+}
+
+// ArticleHandler responses with an article page for the article with id [:id].
+// If article is not found ArticleHandler responses with NotFoundHandler.
 func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	a, err := ArticleStore.Get(p.ByName("id"))
 	if err != nil {
 		NotFoundHandler(w, r)
 		return
 	}
-	log.Println(a.Title)
-	html.Index(w)
+	html.Article(a, w)
 }

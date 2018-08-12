@@ -1,0 +1,20 @@
+<%: func Article(a *articles.Article, w io.Writer) (int, error) %>
+<%~ "base.html" %>
+
+<%@ title { %><%=s a.Title %> - Computing Fun<% } %>
+
+<%@ styles { %>
+    <link rel="stylesheet" type="text/css" href="/client/articles/title.css">
+<% } %>
+
+<%@ body { %>
+    <article class="article">
+        <header class="title">
+            <h1 class="title-main"><%=s a.Title %></h1>
+            <h2 class="title-sub"><%=s a.Details %></h2>
+        </header>
+        <div class="article-content">
+                <%==s a.Content %>
+        </div>
+    </article>
+<% } %>
