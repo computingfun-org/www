@@ -4,6 +4,8 @@ package articles
 type Article struct {
 	Title   string
 	Details string
+	Author  string
+	Date    string
 	Content string
 }
 

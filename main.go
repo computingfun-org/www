@@ -7,24 +7,24 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
+	"gitlab.com/computingfun/computingfun.org/admin"
 	"gitlab.com/computingfun/computingfun.org/articles"
 	"gitlab.com/computingfun/computingfun.org/html"
 	"golang.org/x/crypto/acme/autocert"
+	"golang.org/x/crypto/bcrypt"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// ArticleStore is the storage for articles.
-var ArticleStore articles.Store
+var (
+	// ArticleStore is the storage for articles.
+	ArticleStore *articles.SQLiteStore
+
+	// Admins is the storage for admin users.
+	Admins *admin.SQLiteStore
+)
 
 func main() {
-	handler := httprouter.New()
-	handler.PanicHandler = PanicHandler
-	handler.NotFound = GetNotFoundHandler()
-	handler.GET("/", IndexHandler)
-	handler.GET("/articles/:id", ArticleHandler)
-	handler.ServeFiles("/client/*filepath", http.Dir("./client"))
-
 	db, err := sql.Open("sqlite3", "./cf.db")
 	if err != nil {
 		log.Fatalln(err)
@@ -37,6 +37,19 @@ func main() {
 	}
 	defer ArticleStore.Close()
 
+	Admins, err = admin.NewSQLiteStore(db, "Admins", bcrypt.DefaultCost)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer Admins.Close()
+
+	handler := httprouter.New()
+	handler.PanicHandler = PanicHandler
+	handler.NotFound = http.HandlerFunc(NotFoundHandler)
+	handler.GET("/", IndexHandler)
+	handler.GET("/articles/:id", ArticleHandler)
+	handler.ServeFiles("/client/*filepath", http.Dir("./client"))
+
 	cert := autocert.Manager{
 		Cache:      autocert.DirCache("autocert"),
 		Prompt:     autocert.AcceptTOS,
@@ -48,8 +61,13 @@ func main() {
 		TLSConfig: &tls.Config{GetCertificate: cert.GetCertificate},
 	}
 
-	go http.ListenAndServe("", cert.HTTPHandler(nil))
-	log.Fatalln(server.ListenAndServeTLS("", ""))
+	go func() {
+		err := http.ListenAndServe("", cert.HTTPHandler(nil))
+		log.Fatalln(err)
+	}()
+
+	err = server.ListenAndServeTLS("", "")
+	log.Fatalln(err)
 }
 
 // NotFoundHandler responses with the NotFound error page (404 status code).
@@ -58,15 +76,9 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	html.NotFound(w)
 }
 
-// GetNotFoundHandler just returns NotFoundHandler.
-// Used because httprouter rounter's NotFound won't take NotFoundHandler without this getter func.
-func GetNotFoundHandler() http.HandlerFunc {
-	return NotFoundHandler
-}
-
-// PanicHandler responses with the Panic error page (500 status code) and logs its.
-func PanicHandler(w http.ResponseWriter, r *http.Request, i interface{}) {
-	log.Println("Panic: ", i, " | Request: ", r, " | Response: ", w)
+// PanicHandler responses with the Panic error page (500 status code) and logs the error.
+func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
+	go log.Println("Panic: ", e, " | Request: ", r, " | Response: ", w)
 	w.WriteHeader(http.StatusInternalServerError)
 	html.Panic(w)
 }

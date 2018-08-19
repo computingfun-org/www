@@ -17,7 +17,7 @@ func (s *SQLiteStore) Add(a *Article, id string) error {
 	if id == "" {
 		return errors.New("SQLiteStore.Add: Can't add article with id \"\"")
 	}
-	_, err := s.addStmt.Exec(id, a.Title, a.Details, a.Content)
+	_, err := s.addStmt.Exec(id, a.Title, a.Details, a.Author, a.Date, a.Content)
 	return err
 }
 
@@ -28,7 +28,7 @@ func (s *SQLiteStore) Get(id string) (*Article, error) {
 	}
 	a := &Article{}
 	r := s.getStmt.QueryRow(id)
-	if err := r.Scan(&a.Title, &a.Details, &a.Content); err != nil {
+	if err := r.Scan(&a.Title, &a.Details, &a.Author, &a.Date, &a.Content); err != nil {
 		return nil, err
 	}
 	return a, nil
@@ -57,22 +57,29 @@ func NewSQLiteStore(db *sql.DB, table string) (*SQLiteStore, error) {
 	s := &SQLiteStore{}
 	var err error
 
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS " + table + " (ID text PRIMARY KEY NOT NULL CHECK (ID != \"\"), Title text, Details text, Content text);")
+	fields := "Title, Details, Author, Date, Content"
+	fieldsHolder := "?, ?, ?, ?, ?"
+	fieldsCreater := "Title text, Details text, Author text, Date text, Content text"
+	id := "ID"
+	idHolder := "?"
+	idCreater := id + " text PRIMARY KEY NOT NULL CHECK (" + id + " != \"\")"
+
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS " + table + " (" + idCreater + ", " + fieldsCreater + ");")
 	if err != nil {
 		return nil, err
 	}
 
-	s.addStmt, err = db.Prepare("INSERT INTO " + table + " (ID, Title, Details, Content) VALUES (?, ?, ?, ?);")
+	s.addStmt, err = db.Prepare("INSERT INTO " + table + " (" + id + ", " + fields + ") VALUES (" + idHolder + ", " + fieldsHolder + ");")
 	if err != nil {
 		return nil, err
 	}
 
-	s.getStmt, err = db.Prepare("SELECT Title, Details, Content FROM " + table + " WHERE ID = ? LIMIT 1;")
+	s.getStmt, err = db.Prepare("SELECT " + fields + " FROM " + table + " WHERE " + id + " = " + idHolder + " LIMIT 1;")
 	if err != nil {
 		return nil, err
 	}
 
-	s.removeStmt, err = db.Prepare("DELETE FROM " + table + " WHERE ID = ?;")
+	s.removeStmt, err = db.Prepare("DELETE FROM " + table + " WHERE " + id + " = " + idHolder + ";")
 	if err != nil {
 		return nil, err
 	}

@@ -1,8 +1,9 @@
+/* navbar */
 .navbar {
     position: fixed;
     top: 0px;
     left: -240px;
-    transition: all 0.5s;
+    transition: left 0.5s, background-color 1s;
     background-color: black;
     height: 100%;
     width: 250px;
@@ -14,11 +15,13 @@
     background-color: whitesmoke;
 }
 
+/* remove default a tag style */
 .navbar a {
     text-decoration: none;
     color: white;
 }
 
+/* navbar icon */
 .navbar-icon {
     border-radius: 99px;
     background-color: inherit;
@@ -27,40 +30,40 @@
     left: 235px;
 }
 
+/* navbar title (button and text next to icon) */
 .navbar-title {
     display: inline-block;
     line-height: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 250px;
+    width: 240px;
     text-align: center;
-    transition: all 0.5s;
+    transition: padding-right 0.3s;
     border-radius: 0px 5px 5px 0px;
-}
-
-.navbar-title:hover {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.navbar:hover .navbar-title {
     background-color: #8dc63f;
 }
 
+.navbar-title:hover {
+    padding-right: 40px;
+}
+
+.navbar:hover .navbar-title {
+    width: 250px;
+}
+
+/* navbar links (inner i tag is the link's icon) */
 .navbar-link {
     line-height: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-height: 30px;
     width: 275px;
-    transition: all 0.3s;
+    transition: padding-left 0.3s;
     float: left;
     border-radius: 0px 10px 10px 0px;
     text-align: center;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .navbar-link i {
@@ -74,10 +77,7 @@
     padding-left: 50px;
 }
 
-.navbar-link:active {
-    padding-left: 100px;
-}
-
+/* smaller screens hide navbar links while navbar is close */
 @media only screen and (max-width: 600px) {
     .navbar-link {
         width: 240px;
@@ -88,10 +88,6 @@
     }
 
     .navbar-link:hover {
-        padding-left: 0px;
-    }
-    
-    .navbar-link:active {
         padding-left: 0px;
     }
 }

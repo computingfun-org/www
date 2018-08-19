@@ -55,6 +55,15 @@ func Article(a *articles.Article, w io.Writer) (int, error) {
             <h2 class="title-sub">`)
 	hero.EscapeHTML(a.Details, _buffer)
 	_buffer.WriteString(`</h2>
+            <div class="info">By <address><a rel="author" href="/hello/`)
+	hero.EscapeHTML(a.Author, _buffer)
+	_buffer.WriteString(`">`)
+	hero.EscapeHTML(a.Author, _buffer)
+	_buffer.WriteString(`</a></address>on <time pubdate datetime="`)
+	hero.EscapeHTML(a.Date, _buffer)
+	_buffer.WriteString(`">`)
+	hero.EscapeHTML(a.Date, _buffer)
+	_buffer.WriteString(`</time></div>
         </header>
         <div class="article-content">
                 `)

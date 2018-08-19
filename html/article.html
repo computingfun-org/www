@@ -12,6 +12,7 @@
         <header class="title">
             <h1 class="title-main"><%=s a.Title %></h1>
             <h2 class="title-sub"><%=s a.Details %></h2>
+            <div class="info">By <address><a rel="author" href="/hello/<%=s a.Author %>"><%=s a.Author %></a></address>on <time pubdate datetime="<%=s a.Date %>"><%=s a.Date %></time></div>
         </header>
         <div class="article-content">
                 <%==s a.Content %>

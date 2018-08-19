@@ -1,76 +1,17 @@
-body {
-    overflow: hidden;
-}
-
-.icon-err {
+.icon {
     width: 100%;
-    -webkit-animation: logo-rotate 5s infinite;
-    -moz-animation: logo-rotate 5s infinite;
-    -o-animation: logo-rotate 5s infinite;
-    animation: logo-rotate 5s infinite;
-    animation-timing-function: ease-in-out;
-}
-
-.err {
-    width: 350px;
-    max-width: 90%;
-    margin: auto;
 }
 
 .message {
+    max-width: 350px;
+    margin: auto;
     color: black;
     font-size: large;
 }
 
 .code {
+    max-width: 350px;
+    margin: auto;
     color: darkgrey;
     font-size: small;
-}
-
-@-webkit-keyframes logo-rotate {
-    0% {
-        transform: rotate(80deg);
-    }
-    50% {
-        transform: rotate(190deg);
-    }
-    100% {
-        transform: rotate(80deg);
-    }
-}
-
-@-moz-keyframes logo-rotate {
-    0% {
-        transform: rotate(80deg);
-    }
-    50% {
-        transform: rotate(190deg);
-    }
-    100% {
-        transform: rotate(80deg);
-    }
-}
-
-@-o-keyframes logo-rotate {
-    0% {
-        transform: rotate(80deg);
-    }
-    50% {
-        transform: rotate(190deg);
-    }
-    100% {
-        transform: rotate(80deg);
-    }
-}
-
-@keyframes logo-rotate {
-    0% {
-        transform: rotate(80deg);
-    }
-    50% {
-        transform: rotate(190deg);
-    }
-    100% {
-        transform: rotate(80deg);
-    }
 }

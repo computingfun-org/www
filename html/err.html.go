@@ -46,15 +46,13 @@ func Err(e *ErrMessage, w io.Writer) (int, error) {
         </nav>
         <main class="content">`)
 	_buffer.WriteString(`
-    <img class="icon-err" src="/client/icon/err.svg" alt="Computing Fun Error" height="250" width="250">
-    <div class="err">
-        <div class="message">`)
+    <img class="icon" src="/client/icon/err.svg" alt="Computing Fun Error" height="250" width="250">
+    <div class="message">`)
 	hero.EscapeHTML(e.Message, _buffer)
 	_buffer.WriteString(`</div>
-        <div class="code">`)
+    <div class="code">`)
 	hero.EscapeHTML(e.Code, _buffer)
 	_buffer.WriteString(`</div>
-    </div>
 `)
 
 	_buffer.WriteString(`</main>
