@@ -3,8 +3,14 @@
 
 <%@ title { %><%=s a.Title %> - Computing Fun<% } %>
 
+<%@ description { %><%=s a.Details %><% } %>
+
+<%@ head { %>
+    <meta name="author" content="">
+<% } %>
+
 <%@ styles { %>
-    <link rel="stylesheet" type="text/css" href="/client/articles/title.css">
+    <link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
 <% } %>
 
 <%@ body { %>
@@ -12,7 +18,7 @@
         <header class="title">
             <h1 class="title-main"><%=s a.Title %></h1>
             <h2 class="title-sub"><%=s a.Details %></h2>
-            <div class="info">By <address><a rel="author" href="/hello/<%=s a.Author %>"><%=s a.Author %></a></address>on <time pubdate datetime="<%=s a.Date %>"><%=s a.Date %></time></div>
+            <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
         </header>
         <div class="article-content">
                 <%==s a.Content %>

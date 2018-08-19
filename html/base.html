@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><%@ title { %><% } %></title>
+        <meta name="description" content="<%@ description { %><% } %>">
+        <meta name="keywords" content="<%@ keywords { %><% } %>">
         <link rel="icon" type="image/svg+xml" href="/client/icon/main.svg">
         <%@ head { %><% } %>
         <link rel="stylesheet" type="text/css" href="/client/base/body.css">
         <link rel="stylesheet" type="text/css" href="/client/base/navbar.css">
+        <link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css">
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <%@ styles { %><% } %>
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         <%@ scripts { %><% } %>
     </head>
     <body>
         <nav class="navbar">
-            <a class="navbar-title" href="/">Computing Fun</a>
+            <div class="navbar-title">Computing Fun</div>
             <img src="/client/icon/main.svg" alt="Computing Fun" height="50" width="50" class="navbar-icon">
-            <a class="navbar-link" style="background-color: orange;" href="#">Find more articles.<i class="fa fa-newspaper"></i></a>
+            <a class="navbar-link" style="background-color: green;" href="/">Go back home.<i class="fa fa-home"></i></a>
+            <a class="navbar-link" style="background-color: orange;" href="/articles/easyhttps.go">Find more articles.<i class="fa fa-newspaper"></i></a>
             <a class="navbar-link" style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron.<i class="fab fa-patreon"></i></a>
             <a class="navbar-link" style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">Watch for free on YouTube.<i class="fab fa-youtube"></i></a>
             <a class="navbar-link" style="background-color: purple;" href="#">See us live on Twitch.<i class="fab fa-twitch"></i></a>

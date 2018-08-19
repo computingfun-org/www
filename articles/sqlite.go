@@ -36,8 +36,8 @@ func (s *SQLiteStore) Get(id string) (*Article, error) {
 	if err != nil {
 		return nil, err
 	}
-	a.TimeStamp, err = NewTimeStampFromString(tsRaw)
-	return a, err
+	a.TimeStamp = NewTimeStampFromString(tsRaw)
+	return a, nil
 }
 
 // Update updates the article with id [id] with the data from [a].
@@ -72,7 +72,7 @@ func NewSQLiteStore(db *sql.DB, table string) (*SQLiteStore, error) {
 
 	fields := "Title, Details, Author, Date, Content"
 	fieldsHolder := "?, ?, ?, ?, ?"
-	fieldsCreater := "Title text, Details text, Author text, Date text, Content text"
+	fieldsCreater := "Title text NOT NULL, Details text NOT NULL, Author text NOT NULL, Date text NOT NULL, Content text NOT NULL"
 	fieldsUpdater := "Title = ?, Details = ?, Author = ?, Date = ?, Content = ?"
 	id := "ID"
 	idHolder := "?"

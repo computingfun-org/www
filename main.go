@@ -7,11 +7,9 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	"gitlab.com/computingfun/computingfun.org/admin"
 	"gitlab.com/computingfun/computingfun.org/articles"
 	"gitlab.com/computingfun/computingfun.org/html"
 	"golang.org/x/crypto/acme/autocert"
-	"golang.org/x/crypto/bcrypt"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -19,9 +17,6 @@ import (
 var (
 	// ArticleStore is the storage for articles.
 	ArticleStore *articles.SQLiteStore
-
-	// Admins is the storage for admin users.
-	Admins *admin.SQLiteStore
 )
 
 func main() {
@@ -36,12 +31,6 @@ func main() {
 		log.Fatalln(err)
 	}
 	defer ArticleStore.Close()
-
-	Admins, err = admin.NewSQLiteStore(db, "Admins", bcrypt.DefaultCost)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer Admins.Close()
 
 	handler := httprouter.New()
 	handler.PanicHandler = PanicHandler

@@ -1,0 +1,13 @@
+pre.prettyprint {
+    border: none !important;
+    padding: 10px !important;
+    background-color: #f2f2f2;
+    box-shadow: inset 0px 0px 1px 0px;
+    transition: box-shadow 1s, background-color 1s;
+    white-space: pre-wrap !important;
+}
+
+pre.prettyprint:hover {
+    box-shadow: inset 0px 0px 0.1px 0px;
+    background-color: inherit;
+}

@@ -32,6 +32,7 @@ type Author struct {
 	Permission AuthorPermission
 }
 
+// AuthorPermission is an int used to dedermine what an author is allowed to do.
 type AuthorPermission int
 
 const (
@@ -49,6 +50,7 @@ const (
 	AuthorPermissionAdmin AuthorPermission = 5
 )
 
+// TimeStamp TODO: Comment on TimeStamp.
 type TimeStamp struct {
 	Year  int
 	Month time.Month
@@ -57,29 +59,38 @@ type TimeStamp struct {
 
 // NewTimeStampFromStringSep returns a new TimeStamp from a the string [s].
 // [s] being in YYYYSMMSDD with S being [sep].
-// Only returns first error to occur.
-func NewTimeStampFromStringSep(s string, sep string) (TimeStamp, error) {
-	t := TimeStamp{}
-	var errReturn error
+func NewTimeStampFromStringSep(s string, sep string) TimeStamp {
 	sub := strings.Split(s, sep)
-
-	t.Year, errReturn = strconv.Atoi(sub[0])
-	m, err := strconv.Atoi(sub[1])
-	if errReturn == nil {
-		errReturn = err
-	}
-	t.Month = time.Month(m)
-	t.Day, err = strconv.Atoi(sub[2])
-	if errReturn == nil {
-		errReturn = err
+	if len(sub) != 3 {
+		return TimeStamp{}
 	}
 
-	return t, errReturn
+	y, err := strconv.Atoi(sub[0])
+	if err != nil {
+		return TimeStamp{}
+	}
+
+	mInt, err := strconv.Atoi(sub[1])
+	if err != nil {
+		return TimeStamp{}
+	}
+	m := time.Month(mInt)
+
+	d, err := strconv.Atoi(sub[2])
+	if err != nil {
+		return TimeStamp{}
+	}
+
+	return TimeStamp{
+		Year:  y,
+		Month: m,
+		Day:   d,
+	}
 }
 
 // NewTimeStampFromString returns a new TimeStamp from a the string [s].
 // [s] being in YYYY-MM-DD.
-func NewTimeStampFromString(s string) (TimeStamp, error) {
+func NewTimeStampFromString(s string) TimeStamp {
 	return NewTimeStampFromStringSep(s, "-")
 }
 

@@ -16,30 +16,46 @@ func Article(a *articles.Article, w io.Writer) (int, error) {
 	_buffer.WriteString(`<!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>`)
 	hero.EscapeHTML(a.Title, _buffer)
 	_buffer.WriteString(` - Computing Fun`)
 
 	_buffer.WriteString(`</title>
+        <meta name="description" content="`)
+	hero.EscapeHTML(a.Details, _buffer)
+
+	_buffer.WriteString(`">
+        <meta name="keywords" content="`)
+	_buffer.WriteString(`">
         <link rel="icon" type="image/svg+xml" href="/client/icon/main.svg">
         `)
 	_buffer.WriteString(`
+    <meta name="author" content="">
+`)
+
+	_buffer.WriteString(`
         <link rel="stylesheet" type="text/css" href="/client/base/body.css">
         <link rel="stylesheet" type="text/css" href="/client/base/navbar.css">
+        <link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css">
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         `)
 	_buffer.WriteString(`
-    <link rel="stylesheet" type="text/css" href="/client/articles/title.css">
+    <link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
 `)
 
+	_buffer.WriteString(`
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+        `)
 	_buffer.WriteString(`
     </head>
     <body>
         <nav class="navbar">
-            <a class="navbar-title" href="/">Computing Fun</a>
+            <div class="navbar-title">Computing Fun</div>
             <img src="/client/icon/main.svg" alt="Computing Fun" height="50" width="50" class="navbar-icon">
-            <a class="navbar-link" style="background-color: orange;" href="#">Find more articles.<i class="fa fa-newspaper"></i></a>
+            <a class="navbar-link" style="background-color: green;" href="/">Go back home.<i class="fa fa-home"></i></a>
+            <a class="navbar-link" style="background-color: orange;" href="/articles/easyhttps.go">Find more articles.<i class="fa fa-newspaper"></i></a>
             <a class="navbar-link" style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron.<i class="fab fa-patreon"></i></a>
             <a class="navbar-link" style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">Watch for free on YouTube.<i class="fab fa-youtube"></i></a>
             <a class="navbar-link" style="background-color: purple;" href="#">See us live on Twitch.<i class="fab fa-twitch"></i></a>
@@ -55,15 +71,7 @@ func Article(a *articles.Article, w io.Writer) (int, error) {
             <h2 class="title-sub">`)
 	hero.EscapeHTML(a.Details, _buffer)
 	_buffer.WriteString(`</h2>
-            <div class="info">By <address><a rel="author" href="/hello/`)
-	hero.EscapeHTML(a.Author, _buffer)
-	_buffer.WriteString(`">`)
-	hero.EscapeHTML(a.Author, _buffer)
-	_buffer.WriteString(`</a></address>on <time pubdate datetime="`)
-	hero.EscapeHTML(a.Date, _buffer)
-	_buffer.WriteString(`">`)
-	hero.EscapeHTML(a.Date, _buffer)
-	_buffer.WriteString(`</time></div>
+            <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
         </header>
         <div class="article-content">
                 `)
