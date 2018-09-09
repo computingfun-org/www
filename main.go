@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	"gitlab.com/computingfun/computingfun.org/articles"
-	"gitlab.com/computingfun/computingfun.org/html"
+	"gitlab.com/computingfun/www/articles"
+	"gitlab.com/computingfun/www/html"
 	"golang.org/x/crypto/acme/autocert"
 
 	_ "github.com/mattn/go-sqlite3"
