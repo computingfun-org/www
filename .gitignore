@@ -21,4 +21,4 @@ autocert/
 test.db
 
 # Database
-cf.db
+*.db
