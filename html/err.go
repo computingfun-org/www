@@ -1,6 +1,8 @@
 package html
 
-import "io"
+import (
+	"bytes"
+)
 
 // ErrMessage is an Error that can be used with html.Err.
 type ErrMessage struct {
@@ -22,9 +24,9 @@ func NewNotFoundErrMessage() *ErrMessage {
 	}
 }
 
-// NotFound - Err(NewNotFoundErrMessage(), w)
-func NotFound(w io.Writer) (int, error) {
-	return Err(NewNotFoundErrMessage(), w)
+// NotFound - Err with NotFoundErrMessage
+func NotFound(buffer *bytes.Buffer) {
+	Err(NewNotFoundErrMessage(), buffer)
 }
 
 // NewPanicErrMessage is an ErrMessage for "Panic" or "Server Error" pages.
@@ -36,9 +38,9 @@ func NewPanicErrMessage() *ErrMessage {
 	}
 }
 
-// Panic - Err(NewPanicErrMessage(), w)
-func Panic(w io.Writer) (int, error) {
-	return Err(NewPanicErrMessage(), w)
+// Panic - Err with PanicErrMessage
+func Panic(buffer *bytes.Buffer) {
+	Err(NewPanicErrMessage(), buffer)
 }
 
 // NewComingSoonErrMessage is an ErrMessage for pages that aren't yet available.
@@ -50,7 +52,7 @@ func NewComingSoonErrMessage() *ErrMessage {
 	}
 }
 
-// ComingSoon - Err(NewComingSoonErrMessage(), w)
-func ComingSoon(w io.Writer) (int, error) {
-	return Err(NewComingSoonErrMessage(), w)
+// ComingSoon - Err with ComingSoonErrMessage
+func ComingSoon(buffer *bytes.Buffer) {
+	Err(NewComingSoonErrMessage(), buffer)
 }

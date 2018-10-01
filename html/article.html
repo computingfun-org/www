@@ -1,22 +1,25 @@
-<%: func Article(a *articles.Article, w io.Writer) (int, error) %>
+<%: func Article(a *articles.Article, buffer *bytes.Buffer) %>
 <%~ "base.html" %>
-
 <%@ head { %>
-    <title><%=s a.Title %> - Computing Fun</title>
-    <meta name="description" content="<%=s a.Details %>">
-    <meta name="author" content="">
-    <link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
+<title>
+    <%=s a.Title %> - Computing Fun</title>
+<meta name="description" content="<%=s a.Details %>">
+<meta name="author" content="">
+<link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
 <% } %>
-
 <%@ body { %>
-    <article class="article">
-        <header class="title">
-            <h1 class="title-main"><%=s a.Title %></h1>
-            <h2 class="title-sub"><%=s a.Details %></h2>
-            <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
-        </header>
-        <div class="article-content">
-                <%==s a.Content %>
-        </div>
-    </article>
+<article class="article">
+    <header class="title">
+        <h1 class="title-main">
+            <%=s a.Title %>
+        </h1>
+        <h2 class="title-sub">
+            <%=s a.Details %>
+        </h2>
+        <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
+    </header>
+    <div class="article-content">
+        <%==s a.Content %>
+    </div>
+</article>
 <% } %>

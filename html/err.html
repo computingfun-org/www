@@ -1,13 +1,16 @@
-<%: func Err(e *ErrMessage, w io.Writer) (int, error) %>
+<%: func Err(e *ErrMessage, buffer *bytes.Buffer) %>
 <%~ "base.html" %>
-
 <%@ head { %>
-    <title><%=s e.Title %> - Computing Fun</title>
-    <link rel="stylesheet" type="text/css" href="/client/pages/error.css">
-<% } %>   
-
+<title>
+    <%=s e.Title %> - Computing Fun</title>
+<link rel="stylesheet" type="text/css" href="/client/pages/error.css">
+<% } %>
 <%@ body { %>
-    <img class="icon" src="/client/icon/err.svg" alt="Computing Fun Error" height="250" width="250">
-    <div class="message"><%=s e.Message %></div>
-    <div class="code"><%=s e.Code %></div>
+<img class="icon" src="/client/ico/250r.png" alt="Computing Fun Error" height="250" width="250">
+<div class="message">
+    <%=s e.Message %>
+</div>
+<div class="code">
+    <%=s e.Code %>
+</div>
 <% } %>

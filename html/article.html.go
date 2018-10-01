@@ -4,75 +4,83 @@
 package html
 
 import (
-	"io"
+	"bytes"
 
 	"github.com/shiyanhui/hero"
 	"gitlab.com/computingfun/www/articles"
 )
 
-func Article(a *articles.Article, w io.Writer) (int, error) {
-	_buffer := hero.GetBuffer()
-	defer hero.PutBuffer(_buffer)
-	_buffer.WriteString(`<!DOCTYPE html>
+func Article(a *articles.Article, buffer *bytes.Buffer) {
+	buffer.WriteString(`<!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/svg+xml" href="/client/icon/main.svg">
+        <link rel="shortcut icon" href="/client/ico/fav.ico">
+        <link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192">
+        <link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png">
         <link rel="stylesheet" type="text/css" href="/client/base/nav.css">
         <link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css">
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         `)
-	_buffer.WriteString(`
-    <title>`)
-	hero.EscapeHTML(a.Title, _buffer)
-	_buffer.WriteString(` - Computing Fun</title>
-    <meta name="description" content="`)
-	hero.EscapeHTML(a.Details, _buffer)
-	_buffer.WriteString(`">
-    <meta name="author" content="">
-    <link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
+	buffer.WriteString(`
+<title>
+    `)
+	hero.EscapeHTML(a.Title, buffer)
+	buffer.WriteString(` - Computing Fun</title>
+<meta name="description" content="`)
+	hero.EscapeHTML(a.Details, buffer)
+	buffer.WriteString(`">
+<meta name="author" content="">
+<link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
 `)
 
-	_buffer.WriteString(`
+	buffer.WriteString(`
     </head>
+
     <body style="background-color: whitesmoke;">
         <nav class="navbar">
             <div>Computing Fun</div>
-            <img src="/client/icon/main.svg" alt="Computing Fun" height="50" width="50">
-            <a style="background-color: green;" href="/">Go back home.<i class="fa fa-home"></i></a>
-            <a style="background-color: orange;" href="/articles/easyhttps.go">Find more articles.<i class="fa fa-newspaper"></i></a>
-            <a style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron.<i class="fab fa-patreon"></i></a>
-            <a style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">Watch for free on YouTube.<i class="fab fa-youtube"></i></a>
-            <a style="background-color: purple;" href="#">See us live on Twitch.<i class="fab fa-twitch"></i></a>
-            <a style="background-color: orangered;" href="http://git.computingfun.org">Check out our GitLab.<i class="fab fa-gitlab"></i></a>
+            <img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">
+            <a style="background-color: green;" href="/">Go back home<i class="fa fa-home"></i></a>
+            <a style="background-color: orange;" href="/articles/">Find more articles<i class="fa fa-newspaper"></i></a>
+            <a style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron<i class="fab fa-patreon"></i></a>
+            <a style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">See our videos<i class="fab fa-youtube"></i></a>
+            <a style="background-color: purple;" href="#">Watch us live<i class="fab fa-twitch"></i></a>
             `)
-	_buffer.WriteString(`
+	buffer.WriteString(`
         </nav>
-        <main style="margin: auto; width: 80%; z-index: 0;">`)
-	_buffer.WriteString(`
-    <article class="article">
-        <header class="title">
-            <h1 class="title-main">`)
-	hero.EscapeHTML(a.Title, _buffer)
-	_buffer.WriteString(`</h1>
-            <h2 class="title-sub">`)
-	hero.EscapeHTML(a.Details, _buffer)
-	_buffer.WriteString(`</h2>
-            <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
-        </header>
-        <div class="article-content">
-                `)
-	_buffer.WriteString(a.Content)
-	_buffer.WriteString(`
-        </div>
-    </article>
+        <main style="margin: auto; width: 80%; z-index: 0;">
+            `)
+	buffer.WriteString(`
+<article class="article">
+    <header class="title">
+        <h1 class="title-main">
+            `)
+	hero.EscapeHTML(a.Title, buffer)
+	buffer.WriteString(`
+        </h1>
+        <h2 class="title-sub">
+            `)
+	hero.EscapeHTML(a.Details, buffer)
+	buffer.WriteString(`
+        </h2>
+        <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
+    </header>
+    <div class="article-content">
+        `)
+	buffer.WriteString(a.Content)
+	buffer.WriteString(`
+    </div>
+</article>
 `)
 
-	_buffer.WriteString(`</main>
+	buffer.WriteString(`
+        </main>
     </body>
+
 </html>`)
-	return w.Write(_buffer.Bytes())
 
 }

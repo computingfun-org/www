@@ -4,61 +4,69 @@
 package html
 
 import (
-	"io"
+	"bytes"
 
 	"github.com/shiyanhui/hero"
 )
 
-func Err(e *ErrMessage, w io.Writer) (int, error) {
-	_buffer := hero.GetBuffer()
-	defer hero.PutBuffer(_buffer)
-	_buffer.WriteString(`<!DOCTYPE html>
+func Err(e *ErrMessage, buffer *bytes.Buffer) {
+	buffer.WriteString(`<!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/svg+xml" href="/client/icon/main.svg">
+        <link rel="shortcut icon" href="/client/ico/fav.ico">
+        <link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192">
+        <link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png">
         <link rel="stylesheet" type="text/css" href="/client/base/nav.css">
         <link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css">
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         `)
-	_buffer.WriteString(`
-    <title>`)
-	hero.EscapeHTML(e.Title, _buffer)
-	_buffer.WriteString(` - Computing Fun</title>
-    <link rel="stylesheet" type="text/css" href="/client/pages/error.css">
+	buffer.WriteString(`
+<title>
+    `)
+	hero.EscapeHTML(e.Title, buffer)
+	buffer.WriteString(` - Computing Fun</title>
+<link rel="stylesheet" type="text/css" href="/client/pages/error.css">
 `)
 
-	_buffer.WriteString(`
+	buffer.WriteString(`
     </head>
+
     <body style="background-color: whitesmoke;">
         <nav class="navbar">
             <div>Computing Fun</div>
-            <img src="/client/icon/main.svg" alt="Computing Fun" height="50" width="50">
-            <a style="background-color: green;" href="/">Go back home.<i class="fa fa-home"></i></a>
-            <a style="background-color: orange;" href="/articles/easyhttps.go">Find more articles.<i class="fa fa-newspaper"></i></a>
-            <a style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron.<i class="fab fa-patreon"></i></a>
-            <a style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">Watch for free on YouTube.<i class="fab fa-youtube"></i></a>
-            <a style="background-color: purple;" href="#">See us live on Twitch.<i class="fab fa-twitch"></i></a>
-            <a style="background-color: orangered;" href="http://git.computingfun.org">Check out our GitLab.<i class="fab fa-gitlab"></i></a>
+            <img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">
+            <a style="background-color: green;" href="/">Go back home<i class="fa fa-home"></i></a>
+            <a style="background-color: orange;" href="/articles/">Find more articles<i class="fa fa-newspaper"></i></a>
+            <a style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron<i class="fab fa-patreon"></i></a>
+            <a style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">See our videos<i class="fab fa-youtube"></i></a>
+            <a style="background-color: purple;" href="#">Watch us live<i class="fab fa-twitch"></i></a>
             `)
-	_buffer.WriteString(`
+	buffer.WriteString(`
         </nav>
-        <main style="margin: auto; width: 80%; z-index: 0;">`)
-	_buffer.WriteString(`
-    <img class="icon" src="/client/icon/err.svg" alt="Computing Fun Error" height="250" width="250">
-    <div class="message">`)
-	hero.EscapeHTML(e.Message, _buffer)
-	_buffer.WriteString(`</div>
-    <div class="code">`)
-	hero.EscapeHTML(e.Code, _buffer)
-	_buffer.WriteString(`</div>
+        <main style="margin: auto; width: 80%; z-index: 0;">
+            `)
+	buffer.WriteString(`
+<img class="icon" src="/client/ico/250r.png" alt="Computing Fun Error" height="250" width="250">
+<div class="message">
+    `)
+	hero.EscapeHTML(e.Message, buffer)
+	buffer.WriteString(`
+</div>
+<div class="code">
+    `)
+	hero.EscapeHTML(e.Code, buffer)
+	buffer.WriteString(`
+</div>
 `)
 
-	_buffer.WriteString(`</main>
+	buffer.WriteString(`
+        </main>
     </body>
+
 </html>`)
-	return w.Write(_buffer.Bytes())
 
 }

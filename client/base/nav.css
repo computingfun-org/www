@@ -43,10 +43,9 @@ nav div {
 }
 
 nav a {
-  line-height: 30px;
+  font-size: large;
   margin-top: 5px;
   margin-bottom: 5px;
-  max-height: 30px;
   width: 275px;
   transition: padding-left 0.3s;
   display: inline-block;
@@ -59,8 +58,7 @@ nav a {
 /* link icons */
 nav a i {
   float: right;
-  padding-right: 5px;
-  font-size: 25px;
+  padding: 5px;
 }
 
 nav a:hover {
