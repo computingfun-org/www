@@ -17,44 +17,35 @@ func Err(e *ErrMessage, w io.Writer) (int, error) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>`)
-	hero.EscapeHTML(e.Title, _buffer)
-	_buffer.WriteString(` - Computing Fun`)
-
-	_buffer.WriteString(`</title>
-        <meta name="description" content="`)
-	_buffer.WriteString(`">
-        <meta name="keywords" content="`)
-	_buffer.WriteString(`">
         <link rel="icon" type="image/svg+xml" href="/client/icon/main.svg">
-        `)
-	_buffer.WriteString(`
-        <link rel="stylesheet" type="text/css" href="/client/base/body.css">
-        <link rel="stylesheet" type="text/css" href="/client/base/navbar.css">
+        <link rel="stylesheet" type="text/css" href="/client/base/nav.css">
         <link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css">
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         `)
 	_buffer.WriteString(`
+    <title>`)
+	hero.EscapeHTML(e.Title, _buffer)
+	_buffer.WriteString(` - Computing Fun</title>
     <link rel="stylesheet" type="text/css" href="/client/pages/error.css">
 `)
 
 	_buffer.WriteString(`
-        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-        `)
-	_buffer.WriteString(`
     </head>
-    <body>
+    <body style="background-color: whitesmoke;">
         <nav class="navbar">
-            <div class="navbar-title">Computing Fun</div>
-            <img src="/client/icon/main.svg" alt="Computing Fun" height="50" width="50" class="navbar-icon">
-            <a class="navbar-link" style="background-color: green;" href="/">Go back home.<i class="fa fa-home"></i></a>
-            <a class="navbar-link" style="background-color: orange;" href="/articles/easyhttps.go">Find more articles.<i class="fa fa-newspaper"></i></a>
-            <a class="navbar-link" style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron.<i class="fab fa-patreon"></i></a>
-            <a class="navbar-link" style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">Watch for free on YouTube.<i class="fab fa-youtube"></i></a>
-            <a class="navbar-link" style="background-color: purple;" href="#">See us live on Twitch.<i class="fab fa-twitch"></i></a>
-            <a class="navbar-link" style="background-color: orangered;" href="http://git.computingfun.org">Check out our GitLab.<i class="fab fa-gitlab"></i></a>
+            <div>Computing Fun</div>
+            <img src="/client/icon/main.svg" alt="Computing Fun" height="50" width="50">
+            <a style="background-color: green;" href="/">Go back home.<i class="fa fa-home"></i></a>
+            <a style="background-color: orange;" href="/articles/easyhttps.go">Find more articles.<i class="fa fa-newspaper"></i></a>
+            <a style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron.<i class="fab fa-patreon"></i></a>
+            <a style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">Watch for free on YouTube.<i class="fab fa-youtube"></i></a>
+            <a style="background-color: purple;" href="#">See us live on Twitch.<i class="fab fa-twitch"></i></a>
+            <a style="background-color: orangered;" href="http://git.computingfun.org">Check out our GitLab.<i class="fab fa-gitlab"></i></a>
+            `)
+	_buffer.WriteString(`
         </nav>
-        <main class="content">`)
+        <main style="margin: auto; width: 80%; z-index: 0;">`)
 	_buffer.WriteString(`
     <img class="icon" src="/client/icon/err.svg" alt="Computing Fun Error" height="250" width="250">
     <div class="message">`)

@@ -22,6 +22,7 @@ func NewNotFoundErrMessage() *ErrMessage {
 	}
 }
 
+// NotFound - Err(NewNotFoundErrMessage(), w)
 func NotFound(w io.Writer) (int, error) {
 	return Err(NewNotFoundErrMessage(), w)
 }
@@ -35,6 +36,7 @@ func NewPanicErrMessage() *ErrMessage {
 	}
 }
 
+// Panic - Err(NewPanicErrMessage(), w)
 func Panic(w io.Writer) (int, error) {
 	return Err(NewPanicErrMessage(), w)
 }
@@ -48,6 +50,7 @@ func NewComingSoonErrMessage() *ErrMessage {
 	}
 }
 
+// ComingSoon - Err(NewComingSoonErrMessage(), w)
 func ComingSoon(w io.Writer) (int, error) {
 	return Err(NewComingSoonErrMessage(), w)
 }

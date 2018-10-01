@@ -1,15 +1,10 @@
 <%: func Article(a *articles.Article, w io.Writer) (int, error) %>
 <%~ "base.html" %>
 
-<%@ title { %><%=s a.Title %> - Computing Fun<% } %>
-
-<%@ description { %><%=s a.Details %><% } %>
-
 <%@ head { %>
+    <title><%=s a.Title %> - Computing Fun</title>
+    <meta name="description" content="<%=s a.Details %>">
     <meta name="author" content="">
-<% } %>
-
-<%@ styles { %>
     <link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
 <% } %>
 

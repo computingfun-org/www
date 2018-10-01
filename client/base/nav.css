@@ -1,5 +1,4 @@
-/* navbar */
-.navbar {
+nav {
     position: fixed;
     top: 0px;
     left: -240px;
@@ -10,20 +9,19 @@
     z-index: 10;
 }
 
-.navbar:hover {
+nav:hover {
     left: 0px;
     background-color: whitesmoke;
     box-shadow: 0 0 20px 1px;
 }
 
-/* remove default a tag style */
-.navbar a, .navbar-title {
+/* remove default tag style */
+nav a, nav div {
     text-decoration: none;
     color: white;
 }
 
-/* navbar icon */
-.navbar-icon {
+nav img {
     border-radius: 99px;
     background-color: inherit;
     position: absolute;
@@ -31,8 +29,8 @@
     left: 235px;
 }
 
-/* navbar title (button and text next to icon) */
-.navbar-title {
+/* button and text next to icon */
+nav div {
     display: inline-block;
     line-height: 50px;
     margin-top: 10px;
@@ -44,12 +42,11 @@
     background-color: #8dc63f;
 }
 
-.navbar:hover .navbar-title {
+nav:hover nav div {
     width: 250px;
 }
 
-/* navbar links (inner i tag is the link's icon) */
-.navbar-link {
+nav a {
     line-height: 30px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -63,28 +60,29 @@
     white-space: nowrap;
 }
 
-.navbar-link i {
+/* link icons */
+nav a i {
     float: right;
     padding-right: 5px;
     font-size: 25px;
     line-height: 30px;
 }
 
-.navbar-link:hover {
+nav a:hover {
     padding-left: 50px;
 }
 
-/* smaller screens hide navbar links while navbar is close */
+/* smaller screens hide links while nav is close */
 @media only screen and (max-width: 600px) {
-    .navbar-link {
+    nav a {
         width: 240px;
     }
 
-    .navbar:hover .navbar-link {
+    nav:hover nav a {
         width: 275px;
     }
 
-    .navbar-link:hover {
+    nav a:hover {
         padding-left: 0px;
     }
 }
