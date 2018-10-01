@@ -1,88 +1,83 @@
 nav {
-    position: fixed;
-    top: 0px;
-    left: -240px;
-    transition: left 0.3s, background-color 0.5s;
-    background-color: black;
-    height: 100%;
-    width: 250px;
-    z-index: 10;
+  position: fixed;
+  top: 0;
+  left: -240px;
+  transition: left 0.3s, background-color 0.5s;
+  background-color: black;
+  height: 100%;
+  width: 250px;
+  z-index: 10;
 }
 
 nav:hover {
-    left: 0px;
-    background-color: whitesmoke;
-    box-shadow: 0 0 20px 1px;
+  left: 0;
+  background-color: whitesmoke;
+  box-shadow: 0 0 20px 1px;
 }
 
 /* remove default tag style */
 nav a, nav div {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 nav img {
-    border-radius: 99px;
-    background-color: inherit;
-    position: absolute;
-    top: 10px;
-    left: 235px;
+  border-radius: 99px;
+  background-color: inherit;
+  position: absolute;
+  top: 10px;
+  left: 235px;
 }
 
 /* button and text next to icon */
 nav div {
-    display: inline-block;
-    line-height: 50px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 240px;
-    text-align: center;
-    transition: padding-right 0.3s;
-    border-radius: 0px 5px 5px 0px;
-    background-color: #8dc63f;
-}
-
-nav:hover nav div {
-    width: 250px;
+  display: inline-block;
+  line-height: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 240px;
+  text-align: center;
+  transition: padding-right 0.3s;
+  border-radius: 0px 5px 5px 0px;
+  background-color: #8dc63f;
 }
 
 nav a {
-    line-height: 30px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    max-height: 30px;
-    width: 275px;
-    transition: padding-left 0.3s;
-    float: left;
-    border-radius: 0px 10px 10px 0px;
-    text-align: center;
-    overflow: hidden;
-    white-space: nowrap;
+  line-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  max-height: 30px;
+  width: 275px;
+  transition: padding-left 0.3s;
+  display: inline-block;
+  border-radius: 0px 10px 10px 0px;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* link icons */
 nav a i {
-    float: right;
-    padding-right: 5px;
-    font-size: 25px;
-    line-height: 30px;
+  float: right;
+  padding-right: 5px;
+  font-size: 25px;
 }
 
 nav a:hover {
-    padding-left: 50px;
+  padding-left: 50px;
 }
 
 /* smaller screens hide links while nav is close */
 @media only screen and (max-width: 600px) {
-    nav a {
-        width: 240px;
-    }
+  nav a {
+    width: 240px;
+  }
 
-    nav:hover nav a {
-        width: 275px;
-    }
+  nav:hover nav a {
+    width: 275px;
+  }
 
-    nav a:hover {
-        padding-left: 0px;
-    }
+  nav a:hover {
+    padding-left: 0;
+  }
 }

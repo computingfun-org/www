@@ -1,17 +1,17 @@
 .icon {
-    width: 100%;
+  width: 100%;
 }
 
 .message {
-    max-width: 350px;
-    margin: auto;
-    color: black;
-    font-size: large;
+  max-width: 350px;
+  margin: auto;
+  color: black;
+  font-size: large;
 }
 
 .code {
-    max-width: 350px;
-    margin: auto;
-    color: darkgrey;
-    font-size: small;
+  max-width: 350px;
+  margin: auto;
+  color: darkgrey;
+  font-size: small;
 }

@@ -1,26 +1,26 @@
 .article {
-    max-width: 980px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    padding: 10px;
-    box-shadow: 0 0 0.01px 0;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 10px;
+  box-shadow: 0 0 0.01px 0;
 }
 
 .title {
-    max-width: 500px;
-    margin: auto;
-    text-align: center;
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
 }
 
 .title-main, .title-sub {
-    font-size: large;
+  font-size: large;
 }
 
 .article-content {
-    max-width: 700px;
-    margin: auto;
-    white-space: pre-wrap !important;
+  max-width: 700px;
+  margin: auto;
+  white-space: pre-wrap !important;
 }
 
