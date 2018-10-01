@@ -1,6 +1,7 @@
 package articles
 
 import (
+	"errors"
 	"strconv"
 	"strings"
 	"time"
@@ -57,65 +58,40 @@ type TimeStamp struct {
 	Day   int
 }
 
-// NewTimeStampFromStringSep returns a new TimeStamp from a the string [s].
-// [s] being in YYYYSMMSDD with S being [sep].
-func NewTimeStampFromStringSep(s string, sep string) TimeStamp {
-	sub := strings.Split(s, sep)
+// ErrFormat is error thrown when string is not properly formatted.
+var ErrFormat = errors.New("string not in YYYY-MM-DD format")
+
+// NewTimeStampString returns a new TimeStamp from a string in YYYY-MM-DD format.
+func NewTimeStampString(s string) (TimeStamp, error) {
+	sub := strings.Split(s, "-")
 	if len(sub) != 3 {
-		return TimeStamp{}
+		return TimeStamp{}, ErrFormat
 	}
 
 	y, err := strconv.Atoi(sub[0])
 	if err != nil {
-		return TimeStamp{}
+		return TimeStamp{}, ErrFormat
 	}
 
 	mInt, err := strconv.Atoi(sub[1])
 	if err != nil {
-		return TimeStamp{}
+		return TimeStamp{}, ErrFormat
 	}
 	m := time.Month(mInt)
 
 	d, err := strconv.Atoi(sub[2])
 	if err != nil {
-		return TimeStamp{}
+		return TimeStamp{}, ErrFormat
 	}
 
 	return TimeStamp{
 		Year:  y,
 		Month: m,
 		Day:   d,
-	}
-}
-
-// NewTimeStampFromString returns a new TimeStamp from a the string [s].
-// [s] being in YYYY-MM-DD.
-func NewTimeStampFromString(s string) TimeStamp {
-	return NewTimeStampFromStringSep(s, "-")
-}
-
-// YearText returns the string of Year.
-func (t *TimeStamp) YearText() string {
-	return strconv.Itoa(t.Year)
-}
-
-// MonthText returns the string of Month.
-func (t *TimeStamp) MonthText() string {
-	return strconv.Itoa(int(t.Month))
-}
-
-// DayText returns the string of Day.
-func (t *TimeStamp) DayText() string {
-	return strconv.Itoa(t.Day)
-}
-
-// Text returns a string in YYYYSMMSDD format with S being [s].
-func (t *TimeStamp) Text(s string) string {
-	return t.YearText() + s + t.MonthText() + s + t.DayText()
+	}, nil
 }
 
 // String returns a string in YYYY-MM-DD format.
-// Same as Text with "-" passed in as [sep].
 func (t *TimeStamp) String() string {
-	return t.Text("-")
+	return strconv.Itoa(t.Year) + "-" + strconv.Itoa(int(t.Month)) + "-" + strconv.Itoa(t.Day)
 }
