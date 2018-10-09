@@ -36,6 +36,7 @@ func main() {
 	handler.PanicHandler = PanicHandler
 	handler.NotFound = http.HandlerFunc(NotFoundHandler)
 	handler.GET("/", IndexHandler)
+	handler.GET("/articles/", ArticleIndexHandler)
 	handler.GET("/articles/:id", ArticleHandler)
 	handler.ServeFiles("/client/*filepath", http.Dir("./client"))
 
@@ -74,6 +75,11 @@ func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
 
 // IndexHandler responses with the home page.
 func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	html.ComingSoon(w)
+}
+
+// ArticleIndexHandler responses with the main article page.
+func ArticleIndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	html.ComingSoon(w)
 }
 

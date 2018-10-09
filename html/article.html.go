@@ -46,11 +46,11 @@ func Article(a *articles.Article, w io.Writer) (int, error) {
         <nav class="navbar">
             <div>Computing Fun</div>
             <img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">
-            <a style="background-color: green;" href="/">Go back home<i class="fa fa-home"></i></a>
-            <a style="background-color: orange;" href="/articles/">Find more articles<i class="fa fa-newspaper"></i></a>
-            <a style="background-color: grey;" href="https://www.patreon.com/computingfun">Become a Patron<i class="fab fa-patreon"></i></a>
+            <a style="background-color: green;" href="/">Check out the site<i class="fa fa-home"></i></a>
             <a style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">See our videos<i class="fab fa-youtube"></i></a>
-            <a style="background-color: purple;" href="#">Watch us live<i class="fab fa-twitch"></i></a>
+            <a style="background-color: #f85944;" href="https://www.patreon.com/computingfun">Become a Patron<i class="fab fa-patreon"></i></a>
+            <a style="background-color: #3B5998;" href="https://www.facebook.com/ComputingFun/">Like us<i class="fab fa-facebook-f"></i></a>
+            <a style="background-color: #6441A4;" href="#">See us live<i class="fab fa-twitch"></i></a>
             `)
 	_buffer.WriteString(`
         </nav>

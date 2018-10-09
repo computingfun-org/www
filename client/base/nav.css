@@ -58,7 +58,9 @@ nav a {
 /* link icons */
 nav a i {
   float: right;
+  box-sizing: content-box;
   padding: 5px;
+  width: 25px;
 }
 
 nav a:hover {
