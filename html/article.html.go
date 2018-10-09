@@ -4,14 +4,16 @@
 package html
 
 import (
-	"bytes"
+	"io"
 
 	"github.com/shiyanhui/hero"
 	"gitlab.com/computingfun/www/articles"
 )
 
-func Article(a *articles.Article, buffer *bytes.Buffer) {
-	buffer.WriteString(`<!DOCTYPE html>
+func Article(a *articles.Article, w io.Writer) (int, error) {
+	_buffer := hero.GetBuffer()
+	defer hero.PutBuffer(_buffer)
+	_buffer.WriteString(`<!DOCTYPE html>
 <html>
 
     <head>
@@ -25,19 +27,19 @@ func Article(a *articles.Article, buffer *bytes.Buffer) {
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         `)
-	buffer.WriteString(`
+	_buffer.WriteString(`
 <title>
     `)
-	hero.EscapeHTML(a.Title, buffer)
-	buffer.WriteString(` - Computing Fun</title>
+	hero.EscapeHTML(a.Title, _buffer)
+	_buffer.WriteString(` - Computing Fun</title>
 <meta name="description" content="`)
-	hero.EscapeHTML(a.Details, buffer)
-	buffer.WriteString(`">
+	hero.EscapeHTML(a.Details, _buffer)
+	_buffer.WriteString(`">
 <meta name="author" content="">
 <link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
 `)
 
-	buffer.WriteString(`
+	_buffer.WriteString(`
     </head>
 
     <body style="background-color: whitesmoke;">
@@ -50,37 +52,38 @@ func Article(a *articles.Article, buffer *bytes.Buffer) {
             <a style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">See our videos<i class="fab fa-youtube"></i></a>
             <a style="background-color: purple;" href="#">Watch us live<i class="fab fa-twitch"></i></a>
             `)
-	buffer.WriteString(`
+	_buffer.WriteString(`
         </nav>
         <main style="margin: auto; width: 80%; z-index: 0;">
             `)
-	buffer.WriteString(`
+	_buffer.WriteString(`
 <article class="article">
     <header class="title">
         <h1 class="title-main">
             `)
-	hero.EscapeHTML(a.Title, buffer)
-	buffer.WriteString(`
+	hero.EscapeHTML(a.Title, _buffer)
+	_buffer.WriteString(`
         </h1>
         <h2 class="title-sub">
             `)
-	hero.EscapeHTML(a.Details, buffer)
-	buffer.WriteString(`
+	hero.EscapeHTML(a.Details, _buffer)
+	_buffer.WriteString(`
         </h2>
         <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
     </header>
     <div class="article-content">
         `)
-	buffer.WriteString(a.Content)
-	buffer.WriteString(`
+	_buffer.WriteString(a.Content)
+	_buffer.WriteString(`
     </div>
 </article>
 `)
 
-	buffer.WriteString(`
+	_buffer.WriteString(`
         </main>
     </body>
 
 </html>`)
+	return w.Write(_buffer.Bytes())
 
 }

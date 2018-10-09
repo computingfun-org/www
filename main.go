@@ -62,25 +62,19 @@ func main() {
 // NotFoundHandler responses with the NotFound error page (404 status code).
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	b := html.NewBuffer()
-	defer html.CloseBuffer(b, w)
-	html.NotFound(b)
+	html.NotFound(w)
 }
 
 // PanicHandler responses with the Panic error page (500 status code) and logs the error.
 func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
 	go log.Println("Panic: ", e, " | Request: ", r, " | Response: ", w)
 	w.WriteHeader(http.StatusInternalServerError)
-	b := html.NewBuffer()
-	defer html.CloseBuffer(b, w)
-	html.Panic(b)
+	html.Panic(w)
 }
 
 // IndexHandler responses with the home page.
 func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	b := html.NewBuffer()
-	defer html.CloseBuffer(b, w)
-	html.ComingSoon(b)
+	html.ComingSoon(w)
 }
 
 // ArticleHandler responses with an article page for the article with id [:id].
@@ -91,7 +85,5 @@ func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 		NotFoundHandler(w, r)
 		return
 	}
-	b := html.NewBuffer()
-	defer html.CloseBuffer(b, w)
-	html.Article(a, b)
+	html.Article(a, w)
 }

@@ -1,4 +1,4 @@
-<%: func Article(a *articles.Article, buffer *bytes.Buffer) %>
+<%: func Article(a *articles.Article, w io.Writer) (int, error) %>
 <%~ "base.html" %>
 <%@ head { %>
 <title>

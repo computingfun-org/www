@@ -1,4 +1,4 @@
-<%: func Err(e *ErrMessage, buffer *bytes.Buffer) %>
+<%: func Err(e *ErrMessage, w io.Writer) (int, error) %>
 <%~ "base.html" %>
 <%@ head { %>
 <title>

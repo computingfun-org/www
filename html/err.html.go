@@ -4,13 +4,15 @@
 package html
 
 import (
-	"bytes"
+	"io"
 
 	"github.com/shiyanhui/hero"
 )
 
-func Err(e *ErrMessage, buffer *bytes.Buffer) {
-	buffer.WriteString(`<!DOCTYPE html>
+func Err(e *ErrMessage, w io.Writer) (int, error) {
+	_buffer := hero.GetBuffer()
+	defer hero.PutBuffer(_buffer)
+	_buffer.WriteString(`<!DOCTYPE html>
 <html>
 
     <head>
@@ -24,15 +26,15 @@ func Err(e *ErrMessage, buffer *bytes.Buffer) {
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         `)
-	buffer.WriteString(`
+	_buffer.WriteString(`
 <title>
     `)
-	hero.EscapeHTML(e.Title, buffer)
-	buffer.WriteString(` - Computing Fun</title>
+	hero.EscapeHTML(e.Title, _buffer)
+	_buffer.WriteString(` - Computing Fun</title>
 <link rel="stylesheet" type="text/css" href="/client/pages/error.css">
 `)
 
-	buffer.WriteString(`
+	_buffer.WriteString(`
     </head>
 
     <body style="background-color: whitesmoke;">
@@ -45,28 +47,29 @@ func Err(e *ErrMessage, buffer *bytes.Buffer) {
             <a style="background-color: red;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">See our videos<i class="fab fa-youtube"></i></a>
             <a style="background-color: purple;" href="#">Watch us live<i class="fab fa-twitch"></i></a>
             `)
-	buffer.WriteString(`
+	_buffer.WriteString(`
         </nav>
         <main style="margin: auto; width: 80%; z-index: 0;">
             `)
-	buffer.WriteString(`
+	_buffer.WriteString(`
 <img class="icon" src="/client/ico/250r.png" alt="Computing Fun Error" height="250" width="250">
 <div class="message">
     `)
-	hero.EscapeHTML(e.Message, buffer)
-	buffer.WriteString(`
+	hero.EscapeHTML(e.Message, _buffer)
+	_buffer.WriteString(`
 </div>
 <div class="code">
     `)
-	hero.EscapeHTML(e.Code, buffer)
-	buffer.WriteString(`
+	hero.EscapeHTML(e.Code, _buffer)
+	_buffer.WriteString(`
 </div>
 `)
 
-	buffer.WriteString(`
+	_buffer.WriteString(`
         </main>
     </body>
 
 </html>`)
+	return w.Write(_buffer.Bytes())
 
 }
