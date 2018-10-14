@@ -20,18 +20,21 @@ var (
 )
 
 func main() {
+	// Database
 	db, err := sql.Open("sqlite3", "./cf.db")
 	if err != nil {
 		log.Fatalln(err)
 	}
 	defer db.Close()
 
+	// Article table
 	ArticleStore, err = articles.NewSQLiteStore(db, "Articles")
 	if err != nil {
 		log.Fatalln(err)
 	}
 	defer ArticleStore.Close()
 
+	// Router
 	handler := httprouter.New()
 	handler.PanicHandler = PanicHandler
 	handler.NotFound = http.HandlerFunc(NotFoundHandler)
@@ -40,17 +43,20 @@ func main() {
 	handler.GET("/articles/:id", ArticleHandler)
 	handler.ServeFiles("/client/*filepath", http.Dir("./client"))
 
+	// TLS certificate
 	cert := autocert.Manager{
 		Cache:      autocert.DirCache("autocert"),
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: autocert.HostWhitelist("computingfun.org", "www.computingfun.org"),
 	}
 
+	// Server
 	server := http.Server{
 		Handler:   handler,
 		TLSConfig: &tls.Config{GetCertificate: cert.GetCertificate},
 	}
 
+	// HTTP server, handles Let's Encrypt challenge responses and HTTP redirects.
 	go func() {
 		err := http.ListenAndServe("", cert.HTTPHandler(nil))
 		log.Fatalln(err)
@@ -68,7 +74,7 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 
 // PanicHandler responses with the Panic error page (500 status code) and logs the error.
 func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
-	go log.Println("Panic: ", e, " | Request: ", r, " | Response: ", w)
+	go log.Println("Panic: ", e, " | Request: ", r)
 	w.WriteHeader(http.StatusInternalServerError)
 	html.Panic(w)
 }

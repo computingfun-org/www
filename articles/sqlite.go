@@ -36,7 +36,7 @@ func (s *SQLiteStore) Get(id string) (*Article, error) {
 	if err != nil {
 		return nil, err
 	}
-	a.TimeStamp, _ = NewTimeStampString(tsRaw)
+	a.TimeStamp, _ = NewTimeStamp(tsRaw)
 	return a, nil
 }
 

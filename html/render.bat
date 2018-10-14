@@ -1,1 +1,0 @@
-hero -source="./" -dest="./" -extensions=".html" -pkgname="html"

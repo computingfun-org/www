@@ -58,40 +58,40 @@ type TimeStamp struct {
 	Day   int
 }
 
-// ErrFormat is error thrown when string is not properly formatted.
-var ErrFormat = errors.New("string not in YYYY-MM-DD format")
+// ErrTimeFormat is error thrown when string is not properly formatted.
+var ErrTimeFormat = errors.New("string not in [Year]-[Month]-[Day] format")
 
-// NewTimeStampString returns a new TimeStamp from a string in YYYY-MM-DD format.
-func NewTimeStampString(s string) (TimeStamp, error) {
+// NewTimeStamp returns a new TimeStamp from a string in [Year]-[Month]-[Day] format.
+func NewTimeStamp(s string) (TimeStamp, error) {
+	ts := TimeStamp{}
 	sub := strings.Split(s, "-")
 	if len(sub) != 3 {
-		return TimeStamp{}, ErrFormat
+		return ts, ErrTimeFormat
 	}
 
-	y, err := strconv.Atoi(sub[0])
+	var err error
+
+	ts.Year, err = strconv.Atoi(sub[0])
 	if err != nil {
-		return TimeStamp{}, ErrFormat
+		return ts, ErrTimeFormat
 	}
 
-	mInt, err := strconv.Atoi(sub[1])
+	var mInt int
+	mInt, err = strconv.Atoi(sub[1])
 	if err != nil {
-		return TimeStamp{}, ErrFormat
+		return ts, ErrTimeFormat
 	}
-	m := time.Month(mInt)
+	ts.Month = time.Month(mInt)
 
-	d, err := strconv.Atoi(sub[2])
+	ts.Day, err = strconv.Atoi(sub[2])
 	if err != nil {
-		return TimeStamp{}, ErrFormat
+		return ts, ErrTimeFormat
 	}
 
-	return TimeStamp{
-		Year:  y,
-		Month: m,
-		Day:   d,
-	}, nil
+	return ts, nil
 }
 
-// String returns a string in YYYY-MM-DD format.
+// String returns a string of TimeStamp in [Year]-[Month]-[Day] format.
 func (t *TimeStamp) String() string {
 	return strconv.Itoa(t.Year) + "-" + strconv.Itoa(int(t.Month)) + "-" + strconv.Itoa(t.Day)
 }

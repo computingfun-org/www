@@ -1,4 +1,2 @@
-cd html
-call render.bat
-cd ../
+hero -source="./html" -dest="./html" -extensions=".html" -pkgname="html"
 go build
