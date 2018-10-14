@@ -36,7 +36,7 @@ func main() {
 
 	// Router
 	handler := httprouter.New()
-	handler.GET("/", UnavailableHandler)
+	handler.GET("/", IndexHandler)
 	handler.GET("/articles/", UnavailableHandler)
 	handler.GET("/articles/:id", ArticleHandler)
 	handler.GET("/games/", UnavailableHandler)
@@ -52,7 +52,7 @@ func main() {
 	cert := autocert.Manager{
 		Cache:      autocert.DirCache("autocert"),
 		Prompt:     autocert.AcceptTOS,
-		HostPolicy: autocert.HostWhitelist("computingfun.org", "www.computingfun.org"),
+		HostPolicy: autocert.HostWhitelist("computingfun.org", "www.computingfun.org", "beta.computingfun.org"),
 	}
 
 	// Server
@@ -74,6 +74,11 @@ func main() {
 // UnavailableHandler is an adapter for html.UnavailableHandler.
 func UnavailableHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	html.UnavailableHandler(w, r)
+}
+
+// IndexHandler responses with the home page.
+func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	html.Index(w)
 }
 
 // ArticleHandler responses with an article page for the article with id [:id].

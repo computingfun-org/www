@@ -1,0 +1,22 @@
+.nav-boxes {
+  text-align: center;
+}
+
+.nav-boxes a {
+  height: 250px;
+  width: 250px;
+  margin: 10px;
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  transition: box-shadow 0.3s;
+  box-shadow: none;
+}
+
+.nav-boxes a:hover {
+  box-shadow: 0 0 20px 0 black;
+}
+
+.nav-boxes a i {
+  font-size: 150px;
+}
