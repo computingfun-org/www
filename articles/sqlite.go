@@ -72,33 +72,24 @@ func NewSQLiteStore(db *sql.DB, table string) (*SQLiteStore, error) {
 
 	fields := "Title, Details, Author, Date, Content"
 	fieldsHolder := "?, ?, ?, ?, ?"
-	fieldsCreater := "Title text NOT NULL, Details text NOT NULL, Author text NOT NULL, Date text NOT NULL, Content text NOT NULL"
 	fieldsUpdater := "Title = ?, Details = ?, Author = ?, Date = ?, Content = ?"
-	id := "ID"
-	idHolder := "?"
-	idCreater := id + " text PRIMARY KEY NOT NULL CHECK (" + id + " != \"\")"
 
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS " + table + " (" + idCreater + ", " + fieldsCreater + ");")
+	s.addStmt, err = db.Prepare("INSERT INTO " + table + " (ID , " + fields + ") VALUES (?, " + fieldsHolder + ");")
 	if err != nil {
 		return nil, err
 	}
 
-	s.addStmt, err = db.Prepare("INSERT INTO " + table + " (" + id + ", " + fields + ") VALUES (" + idHolder + ", " + fieldsHolder + ");")
+	s.getStmt, err = db.Prepare("SELECT " + fields + " FROM " + table + " WHERE ID = ? LIMIT 1;")
 	if err != nil {
 		return nil, err
 	}
 
-	s.getStmt, err = db.Prepare("SELECT " + fields + " FROM " + table + " WHERE " + id + " = " + idHolder + " LIMIT 1;")
+	s.updateStmt, err = db.Prepare("Update " + table + " SET " + fieldsUpdater + " WHERE ID = ?;")
 	if err != nil {
 		return nil, err
 	}
 
-	s.updateStmt, err = db.Prepare("Update " + table + " SET " + fieldsUpdater + " WHERE " + id + " = ?;")
-	if err != nil {
-		return nil, err
-	}
-
-	s.removeStmt, err = db.Prepare("DELETE FROM " + table + " WHERE " + id + " = " + idHolder + ";")
+	s.removeStmt, err = db.Prepare("DELETE FROM " + table + " WHERE ID = ?;")
 	if err != nil {
 		return nil, err
 	}

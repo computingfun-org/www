@@ -22,9 +22,7 @@ func Err(e *ErrMessage, w io.Writer) (int, error) {
         <link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192">
         <link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png">
         <link rel="stylesheet" type="text/css" href="/client/base/nav.css">
-        <link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css">
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         `)
 	_buffer.WriteString(`
 <title>
@@ -41,12 +39,12 @@ func Err(e *ErrMessage, w io.Writer) (int, error) {
         <nav class="navbar">
             <div>Computing Fun</div>
             <img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">
-            <a style="background-color: #77ab59;" href="https://computingfun.org/articles/">Articles<i class="far fa-newspaper"></i></a>
-            <a style="background-color: #171A21;" href="https://computingfun.org/games/">Games<i class="fas fa-gamepad"></i></a>
             <a style="background-color: #ff0000;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA">Channel<i class="fab fa-youtube"></i></a>
             <a style="background-color: #f85944;" href="https://www.patreon.com/computingfun">Patron<i class="fab fa-patreon"></i></a>
+            <a style="background-color: #171A21;" href="https://computingfun.org/games/">Games<i class="fas fa-gamepad"></i></a>
+            <a style="background-color: #77ab59;" href="https://computingfun.org/articles/">Articles<i class="far fa-newspaper"></i></a>
             <a style="background-color: #3B5998;" href="https://www.facebook.com/ComputingFun/">Facebook<i class="fab fa-facebook-f"></i></a>
-            <!--<a style="background-color: #6441A4;" href="#">Twitch<i class="fab fa-twitch"></i></a>-->
+            <a style="background-color: #6441A4;" href="#">Live<i class="fab fa-twitch"></i></a>
             `)
 	_buffer.WriteString(`
         </nav>

@@ -20,5 +20,5 @@ autocert/
 # Test database
 test.db
 
-# Database
-*.db
+# Database - allow database for test runs
+#*.db
