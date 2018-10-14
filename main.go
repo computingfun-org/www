@@ -36,12 +36,17 @@ func main() {
 
 	// Router
 	handler := httprouter.New()
-	handler.PanicHandler = PanicHandler
-	handler.NotFound = http.HandlerFunc(NotFoundHandler)
-	handler.GET("/", IndexHandler)
-	handler.GET("/articles/", ArticleIndexHandler)
+	handler.GET("/", UnavailableHandler)
+	handler.GET("/articles/", UnavailableHandler)
 	handler.GET("/articles/:id", ArticleHandler)
+	handler.GET("/games/", UnavailableHandler)
+	handler.GET("/games/:id", UnavailableHandler)
 	handler.ServeFiles("/client/*filepath", http.Dir("./client"))
+	handler.NotFound = http.HandlerFunc(html.NotFoundHandler)
+	handler.PanicHandler = func(w http.ResponseWriter, r *http.Request, e interface{}) {
+		go log.Println("Panic: ", e, " | Request: ", r)
+		html.PanicHandler(w, r)
+	}
 
 	// TLS certificate
 	cert := autocert.Manager{
@@ -66,27 +71,9 @@ func main() {
 	log.Fatalln(err)
 }
 
-// NotFoundHandler responses with the NotFound error page (404 status code).
-func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotFound)
-	html.NotFound(w)
-}
-
-// PanicHandler responses with the Panic error page (500 status code) and logs the error.
-func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
-	go log.Println("Panic: ", e, " | Request: ", r)
-	w.WriteHeader(http.StatusInternalServerError)
-	html.Panic(w)
-}
-
-// IndexHandler responses with the home page.
-func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	html.ComingSoon(w)
-}
-
-// ArticleIndexHandler responses with the main article page.
-func ArticleIndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	html.ComingSoon(w)
+// UnavailableHandler is an adapter for html.UnavailableHandler.
+func UnavailableHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	html.UnavailableHandler(w, r)
 }
 
 // ArticleHandler responses with an article page for the article with id [:id].
@@ -94,7 +81,7 @@ func ArticleIndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Pa
 func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	a, err := ArticleStore.Get(p.ByName("id"))
 	if err != nil {
-		NotFoundHandler(w, r)
+		html.NotFoundHandler(w, r)
 		return
 	}
 	html.Article(a, w)
