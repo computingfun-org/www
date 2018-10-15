@@ -3,9 +3,10 @@
 }
 
 .nav-boxes a {
-  height: 250px;
   width: 250px;
   margin: 10px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   display: inline-block;
   text-decoration: none;
   color: white;
