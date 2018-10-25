@@ -14,11 +14,5 @@
 # Bin folder
 bin/
 
-# Autocert cache folder
-autocert/
-
-# Test database
-test.db
-
 # Database - allow database for test runs
 #*.db

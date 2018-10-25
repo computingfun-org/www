@@ -1,7 +1,8 @@
 package main
 
+//go:generate fileb0x b0x.yaml
+
 import (
-	"crypto/tls"
 	"database/sql"
 	"log"
 	"net/http"
@@ -9,6 +10,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"gitlab.com/computingfun/www/articles"
 	"gitlab.com/computingfun/www/html"
+	"gitlab.com/zacc/autocertcache"
 	"golang.org/x/crypto/acme/autocert"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -20,21 +22,18 @@ var (
 )
 
 func main() {
-	// Database
 	db, err := sql.Open("sqlite3", "./cf.db")
 	if err != nil {
 		log.Fatalln(err)
 	}
 	defer db.Close()
 
-	// Article table
 	ArticleStore, err = articles.NewSQLiteStore(db, "Articles")
 	if err != nil {
 		log.Fatalln(err)
 	}
 	defer ArticleStore.Close()
 
-	// Router
 	handler := httprouter.New()
 	handler.GET("/", IndexHandler)
 	handler.GET("/articles/", UnavailableHandler)
@@ -48,20 +47,23 @@ func main() {
 		html.PanicHandler(w, r)
 	}
 
-	// TLS certificate
+	certCache, err := autocertcache.NewSQL(db, "Certs")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer certCache.Close()
+
 	cert := autocert.Manager{
-		Cache:      autocert.DirCache("autocert"),
+		Cache:      certCache,
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: autocert.HostWhitelist("computingfun.org", "www.computingfun.org", "beta.computingfun.org"),
 	}
 
-	// Server
 	server := http.Server{
 		Handler:   handler,
-		TLSConfig: &tls.Config{GetCertificate: cert.GetCertificate},
+		TLSConfig: cert.TLSConfig(),
 	}
 
-	// HTTP server, handles Let's Encrypt challenge responses and HTTP redirects.
 	go func() {
 		err := http.ListenAndServe("", cert.HTTPHandler(nil))
 		log.Fatalln(err)
