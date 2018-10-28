@@ -22,146 +22,155 @@ var (
 )
 
 //line err.qtpl:5
+// ErrPage is a page that holds err information.
 type ErrPage struct {
 	Message string
 	Code    string
 	Title   string
 }
 
+// Error makes ErrPage of type error.
+func (e ErrPage) Error() string {
+	return e.Code + ": " + e.Message
+}
+
+// NotFoundPage is an ErrPage for 404 Not Found pages.
 var NotFoundPage = ErrPage{
 	Message: "We're sorry but we couldn't find the page you're looking for :(",
 	Code:    "Error - HTTP 404: Not Found",
 	Title:   "Not it",
 }
 
+// PanicPage is an ErrPage for 500 Internal Server Error pages.
 var PanicPage = ErrPage{
 	Message: "There seems to be something wrong. Don't panic, we're already doing that for you.",
 	Code:    "Error - HTTP 500: Internal Server Error",
 	Title:   "Panicing",
 }
 
+// UnavailablePage is an ErrPage for 503 Service Unavailable pages.
 var UnavailablePage = ErrPage{
 	Message: "This page isn't ready just yet.",
 	Code:    "Error - HTTP 503: Service Unavailable",
 	Title:   "Work in process",
 }
 
-//line err.qtpl:30
+//line err.qtpl:39
 func (e ErrPage) streamhead(qw422016 *qt422016.Writer) {
-	//line err.qtpl:30
+	//line err.qtpl:39
 	qw422016.N().S(`
 <title>`)
-	//line err.qtpl:31
+	//line err.qtpl:40
 	qw422016.N().S(e.Title)
-	//line err.qtpl:31
+	//line err.qtpl:40
 	qw422016.N().S(` - Computing Fun</title>
 <link rel="stylesheet" type="text/css" href="/client/pages/error.css">
 `)
-//line err.qtpl:33
+//line err.qtpl:42
 }
 
-//line err.qtpl:33
+//line err.qtpl:42
 func (e ErrPage) writehead(qq422016 qtio422016.Writer) {
-	//line err.qtpl:33
+	//line err.qtpl:42
 	qw422016 := qt422016.AcquireWriter(qq422016)
-	//line err.qtpl:33
+	//line err.qtpl:42
 	e.streamhead(qw422016)
-	//line err.qtpl:33
+	//line err.qtpl:42
 	qt422016.ReleaseWriter(qw422016)
-//line err.qtpl:33
+//line err.qtpl:42
 }
 
-//line err.qtpl:33
+//line err.qtpl:42
 func (e ErrPage) head() string {
-	//line err.qtpl:33
+	//line err.qtpl:42
 	qb422016 := qt422016.AcquireByteBuffer()
-	//line err.qtpl:33
+	//line err.qtpl:42
 	e.writehead(qb422016)
-	//line err.qtpl:33
+	//line err.qtpl:42
 	qs422016 := string(qb422016.B)
-	//line err.qtpl:33
+	//line err.qtpl:42
 	qt422016.ReleaseByteBuffer(qb422016)
-	//line err.qtpl:33
+	//line err.qtpl:42
 	return qs422016
-//line err.qtpl:33
+//line err.qtpl:42
 }
 
-//line err.qtpl:35
+//line err.qtpl:44
 func (e ErrPage) streambody(qw422016 *qt422016.Writer) {
-	//line err.qtpl:35
+	//line err.qtpl:44
 	qw422016.N().S(`
 <img class="icon" src="/client/ico/250r.png" alt="Computing Fun Error" height="250" width="250">
 <div class="message">
     `)
-	//line err.qtpl:38
+	//line err.qtpl:47
 	qw422016.N().S(e.Message)
-	//line err.qtpl:38
+	//line err.qtpl:47
 	qw422016.N().S(`
 </div>
 <div class="code">
     `)
-	//line err.qtpl:41
+	//line err.qtpl:50
 	qw422016.N().S(e.Code)
-	//line err.qtpl:41
+	//line err.qtpl:50
 	qw422016.N().S(`
 </div>
 `)
-//line err.qtpl:43
+//line err.qtpl:52
 }
 
-//line err.qtpl:43
+//line err.qtpl:52
 func (e ErrPage) writebody(qq422016 qtio422016.Writer) {
-	//line err.qtpl:43
+	//line err.qtpl:52
 	qw422016 := qt422016.AcquireWriter(qq422016)
-	//line err.qtpl:43
+	//line err.qtpl:52
 	e.streambody(qw422016)
-	//line err.qtpl:43
+	//line err.qtpl:52
 	qt422016.ReleaseWriter(qw422016)
-//line err.qtpl:43
+//line err.qtpl:52
 }
 
-//line err.qtpl:43
+//line err.qtpl:52
 func (e ErrPage) body() string {
-	//line err.qtpl:43
+	//line err.qtpl:52
 	qb422016 := qt422016.AcquireByteBuffer()
-	//line err.qtpl:43
+	//line err.qtpl:52
 	e.writebody(qb422016)
-	//line err.qtpl:43
+	//line err.qtpl:52
 	qs422016 := string(qb422016.B)
-	//line err.qtpl:43
+	//line err.qtpl:52
 	qt422016.ReleaseByteBuffer(qb422016)
-	//line err.qtpl:43
+	//line err.qtpl:52
 	return qs422016
-//line err.qtpl:43
+//line err.qtpl:52
 }
 
-//line err.qtpl:45
+//line err.qtpl:54
 func (e ErrPage) streamnavLinks(qw422016 *qt422016.Writer) {
-//line err.qtpl:45
+//line err.qtpl:54
 }
 
-//line err.qtpl:45
+//line err.qtpl:54
 func (e ErrPage) writenavLinks(qq422016 qtio422016.Writer) {
-	//line err.qtpl:45
+	//line err.qtpl:54
 	qw422016 := qt422016.AcquireWriter(qq422016)
-	//line err.qtpl:45
+	//line err.qtpl:54
 	e.streamnavLinks(qw422016)
-	//line err.qtpl:45
+	//line err.qtpl:54
 	qt422016.ReleaseWriter(qw422016)
-//line err.qtpl:45
+//line err.qtpl:54
 }
 
-//line err.qtpl:45
+//line err.qtpl:54
 func (e ErrPage) navLinks() string {
-	//line err.qtpl:45
+	//line err.qtpl:54
 	qb422016 := qt422016.AcquireByteBuffer()
-	//line err.qtpl:45
+	//line err.qtpl:54
 	e.writenavLinks(qb422016)
-	//line err.qtpl:45
+	//line err.qtpl:54
 	qs422016 := string(qb422016.B)
-	//line err.qtpl:45
+	//line err.qtpl:54
 	qt422016.ReleaseByteBuffer(qb422016)
-	//line err.qtpl:45
+	//line err.qtpl:54
 	return qs422016
-//line err.qtpl:45
+//line err.qtpl:54
 }

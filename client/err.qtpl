@@ -2,24 +2,33 @@
 <%~ "base.html" %>
 
 {% code
+// ErrPage is a page that holds err information.
 type ErrPage struct {
     Message string
 	Code    string
 	Title   string
 }
 
+// Error makes ErrPage of type error.
+func (e ErrPage) Error() string {
+	return e.Code + ": " + e.Message
+}
+
+// NotFoundPage is an ErrPage for 404 Not Found pages.
 var NotFoundPage = ErrPage{
 	Message: "We're sorry but we couldn't find the page you're looking for :(",
 	Code:    "Error - HTTP 404: Not Found",
 	Title:   "Not it",
 }
 
+// PanicPage is an ErrPage for 500 Internal Server Error pages.
 var PanicPage = ErrPage{
 	Message: "There seems to be something wrong. Don't panic, we're already doing that for you.",
 	Code:    "Error - HTTP 500: Internal Server Error",
 	Title:   "Panicing",
 }
 
+// UnavailablePage is an ErrPage for 503 Service Unavailable pages.
 var UnavailablePage = ErrPage{
 	Message: "This page isn't ready just yet.",
 	Code:    "Error - HTTP 503: Service Unavailable",
