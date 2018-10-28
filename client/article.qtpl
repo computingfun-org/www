@@ -2,8 +2,10 @@
 
 {% code type ArticlePage articles.Article %}
 
+{% stripspace %}
+
 {% func (a ArticlePage) head() %}
-<title><%=s a.Title %> - Computing Fun</title>
+<title>{%s a.Title %} - Computing Fun</title>
 <meta name="description" content="<%=s a.Details %>">
 <meta name="author" content="">
 <link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
@@ -23,9 +25,11 @@
         <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
     </header>
     <div class="article-content">
-        {%s a.Content %}
+        {%s= a.Content %}
     </div>
 </article>
 {% endfunc %}
 
 {% func (a ArticlePage) navLinks() %}{% endfunc %}
+
+{% endstripspace %}

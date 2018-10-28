@@ -6,12 +6,13 @@ interface Page {
 }
 %}
 
+{% stripspace %}
+
 {% func navLink(text, link, icon, color string) %}
 <a style="background-color: {%s= color %};" href="{%s= link %}">{%s= text %}<i class="{%s= icon %}"></i></a>
 {% endfunc %}
 
 {% func HTML(p Page) %}
-{% stripspace %}
 <!DOCTYPE html>
 <html>
 
@@ -44,5 +45,6 @@ interface Page {
     </body>
 
 </html>
-{% endstripspace %}
 {% endfunc %}
+
+{% endstripspace %}

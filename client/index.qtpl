@@ -1,5 +1,7 @@
 {% code type IndexPage struct {} %}
 
+{% stripspace %}
+
 {% func (i IndexPage) head() %}
 <title>Computing Fun</title>
 <meta name="description" content="We build, teach and deploy all types of software solutions. From teaching non tech to developers. Building software and web servers of small businesses.">
@@ -18,3 +20,5 @@
 {% endfunc %}
 
 {% func (i IndexPage) navLinks() %}{% endfunc %}
+
+{% endstripspace %}
