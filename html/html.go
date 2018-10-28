@@ -1,5 +1,8 @@
 package html
 
+//go:generate go get github.com/valyala/quicktemplate/qtc
+//go:generate qtc
+
 import (
 	"io"
 	"net/http"

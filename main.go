@@ -1,6 +1,6 @@
 package main
 
-//go:generate fileb0x b0x.yaml
+//go:generate go generate ./html ./client
 
 import (
 	"database/sql"
@@ -9,6 +9,7 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"gitlab.com/computingfun/www/articles"
+	"gitlab.com/computingfun/www/client"
 	"gitlab.com/computingfun/www/html"
 	"gitlab.com/zacc/autocertcache"
 	"golang.org/x/crypto/acme/autocert"
@@ -34,13 +35,18 @@ func main() {
 	}
 	defer ArticleStore.Close()
 
+	hfs, err := client.NewHTTPFileSystem()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	handler := httprouter.New()
 	handler.GET("/", IndexHandler)
 	handler.GET("/articles/", UnavailableHandler)
 	handler.GET("/articles/:id", ArticleHandler)
 	handler.GET("/games/", UnavailableHandler)
 	handler.GET("/games/:id", UnavailableHandler)
-	handler.ServeFiles("/client/*filepath", http.Dir("./client"))
+	handler.ServeFiles("/client/*filepath", hfs)
 	handler.NotFound = http.HandlerFunc(html.NotFoundHandler)
 	handler.PanicHandler = func(w http.ResponseWriter, r *http.Request, e interface{}) {
 		go log.Println("Panic: ", e, " | Request: ", r)
