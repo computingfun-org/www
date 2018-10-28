@@ -1,11 +1,12 @@
-<%: func Index(w io.Writer) (int, error) %>
-<%~ "base.html" %>
-<%@ head { %>
+{% code type IndexPage struct {} %}
+
+{% func (i IndexPage) head() %}
 <title>Computing Fun</title>
 <meta name="description" content="We build, teach and deploy all types of software solutions. From teaching non tech to developers. Building software and web servers of small businesses.">
 <link rel="stylesheet" type="text/css" href="/client/pages/index.css">
-<% } %>
-<%@ body { %>
+{% endfunc %}
+
+{% func (i IndexPage) body() %}
 <div class="nav-boxes">
     <a style="background-color: #ff0000;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA"><i class="fab fa-youtube"></i></a>
     <a style="background-color: #f85944;" href="https://www.patreon.com/computingfun"><i class="fab fa-patreon"></i></a>
@@ -14,4 +15,6 @@
     <a style="background-color: #3B5998;" href="https://www.facebook.com/ComputingFun/"><i class="fab fa-facebook-f"></i></a>
     <a style="background-color: #6441A4;" href="#"><i class="fab fa-twitch"></i></a>
 </div>
-<% } %>
+{% endfunc %}
+
+{% func (i IndexPage) navLinks() %}{% endfunc %}

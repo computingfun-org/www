@@ -1,27 +1,31 @@
-<%: func Article(a *articles.Article, w io.Writer) (int, error) %>
-<%~ "base.html" %>
-<%@ head { %>
-<title>
-    <%=s a.Title %> - Computing Fun</title>
+{% import "gitlab.com/computingfun/www/articles" %}
+
+{% code type ArticlePage articles.Article %}
+
+{% func (a ArticlePage) head() %}
+<title><%=s a.Title %> - Computing Fun</title>
 <meta name="description" content="<%=s a.Details %>">
 <meta name="author" content="">
 <link rel="stylesheet" type="text/css" href="/client/pages/articles.css">
 <link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css">
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-<% } %>
-<%@ body { %>
+{% endfunc %}
+
+{% func (a ArticlePage) body() %}
 <article class="article">
     <header class="title">
         <h1 class="title-main">
-            <%=s a.Title %>
+            {%s a.Title %}
         </h1>
         <h2 class="title-sub">
-            <%=s a.Details %>
+            {%s a.Details %}
         </h2>
         <div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div>
     </header>
     <div class="article-content">
-        <%==s a.Content %>
+        {%s a.Content %}
     </div>
 </article>
-<% } %>
+{% endfunc %}
+
+{% func (a ArticlePage) navLinks() %}{% endfunc %}

@@ -1,7 +1,10 @@
 package client
 
+//go:generate go get github.com/valyala/quicktemplate/qtc
+//go:generate qtc
+
 //go:generate go get github.com/rakyll/statik
-//go:generate statik -src=./ -dest=../ -p=client
+//go:generate statik -src=filesystem -dest=../ -p=client
 
 import (
 	"net/http"

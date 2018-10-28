@@ -1,0 +1,45 @@
+<%: func Err(e *ErrMessage, w io.Writer) (int, error) %>
+<%~ "base.html" %>
+
+{% code
+type ErrPage struct {
+    Message string
+	Code    string
+	Title   string
+}
+
+var NotFoundPage = ErrPage{
+	Message: "We're sorry but we couldn't find the page you're looking for :(",
+	Code:    "Error - HTTP 404: Not Found",
+	Title:   "Not it",
+}
+
+var PanicPage = ErrPage{
+	Message: "There seems to be something wrong. Don't panic, we're already doing that for you.",
+	Code:    "Error - HTTP 500: Internal Server Error",
+	Title:   "Panicing",
+}
+
+var UnavailablePage = ErrPage{
+	Message: "This page isn't ready just yet.",
+	Code:    "Error - HTTP 503: Service Unavailable",
+	Title:   "Work in process",
+}
+%}
+
+{% func (e ErrPage) head() %}
+<title>{%s= e.Title %} - Computing Fun</title>
+<link rel="stylesheet" type="text/css" href="/client/pages/error.css">
+{% endfunc %}
+
+{% func (e ErrPage) body() %}
+<img class="icon" src="/client/ico/250r.png" alt="Computing Fun Error" height="250" width="250">
+<div class="message">
+    {%s= e.Message %}
+</div>
+<div class="code">
+    {%s= e.Code %}
+</div>
+{% endfunc %}
+
+{% func (e ErrPage) navLinks() %}{% endfunc %}

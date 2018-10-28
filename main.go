@@ -1,6 +1,6 @@
 package main
 
-//go:generate go generate ./html ./client
+//go:generate go generate ./client
 
 import (
 	"database/sql"
@@ -10,7 +10,6 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"gitlab.com/computingfun/www/articles"
 	"gitlab.com/computingfun/www/client"
-	"gitlab.com/computingfun/www/html"
 	"gitlab.com/zacc/autocertcache"
 	"golang.org/x/crypto/acme/autocert"
 
@@ -47,11 +46,8 @@ func main() {
 	handler.GET("/games/", UnavailableHandler)
 	handler.GET("/games/:id", UnavailableHandler)
 	handler.ServeFiles("/client/*filepath", hfs)
-	handler.NotFound = http.HandlerFunc(html.NotFoundHandler)
-	handler.PanicHandler = func(w http.ResponseWriter, r *http.Request, e interface{}) {
-		go log.Println("Panic: ", e, " | Request: ", r)
-		html.PanicHandler(w, r)
-	}
+	handler.NotFound = http.HandlerFunc(NotFoundHandler)
+	handler.PanicHandler = PanicHandler
 
 	certCache, err := autocertcache.NewSQL(db, "Certs")
 	if err != nil {
@@ -79,14 +75,25 @@ func main() {
 	log.Fatalln(err)
 }
 
-// UnavailableHandler is an adapter for html.UnavailableHandler.
+// UnavailableHandler is an adapter for ...
 func UnavailableHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	html.UnavailableHandler(w, r)
+	client.WriteHTML(w, client.UnavailablePage)
+}
+
+// NotFoundHandler is an adapter for ...
+func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	client.WriteHTML(w, client.NotFoundPage)
+}
+
+// PanicHandler is an adapter for ...
+func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
+	go log.Println("Panic: ", e, " | Request: ", r)
+	client.WriteHTML(w, client.PanicPage)
 }
 
 // IndexHandler responses with the home page.
 func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	html.Index(w)
+	client.WriteHTML(w, client.IndexPage{})
 }
 
 // ArticleHandler responses with an article page for the article with id [:id].
@@ -94,8 +101,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	a, err := ArticleStore.Get(p.ByName("id"))
 	if err != nil {
-		html.NotFoundHandler(w, r)
+		NotFoundHandler(w, r)
 		return
 	}
-	html.Article(a, w)
+	client.WriteHTML(w, client.ArticlePage(*a))
 }
