@@ -77,17 +77,20 @@ func main() {
 
 // UnavailableHandler is an adapter for ...
 func UnavailableHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	w.WriteHeader(http.StatusServiceUnavailable)
 	client.WriteHTML(w, client.UnavailablePage)
 }
 
 // NotFoundHandler is an adapter for ...
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
 	client.WriteHTML(w, client.NotFoundPage)
 }
 
 // PanicHandler is an adapter for ...
 func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
 	go log.Println("Panic: ", e, " | Request: ", r)
+	w.WriteHeader(http.StatusInternalServerError)
 	client.WriteHTML(w, client.PanicPage)
 }
 
