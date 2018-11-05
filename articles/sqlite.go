@@ -5,8 +5,8 @@ import (
 	"errors"
 )
 
-// ErrEmptyID is the error used when an empty string is given as an article is.
-var ErrEmptyID = errors.New("articles.SQLiteStore: Can't use empty string as id")
+// ErrSQLiteEmptyID is the error used when an empty string is given as an article is.
+var ErrSQLiteEmptyID = errors.New("articles.SQLiteStore: Can't use empty string as id")
 
 // SQLiteStore is a SQLite ArticleStore.
 type SQLiteStore struct {
@@ -16,33 +16,33 @@ type SQLiteStore struct {
 	removeStmt *sql.Stmt
 }
 
+var _ Store = &SQLiteStore{}
+
 // Add an article [a] to the SQLite database with the ID [id].
-func (s *SQLiteStore) Add(id string, a *Article) error {
+func (s *SQLiteStore) Add(id string, a Article) error {
 	if id == "" {
-		return ErrEmptyID
+		return ErrSQLiteEmptyID
 	}
-	_, err := s.addStmt.Exec(id, a.Title, a.Details, a.Author, a.TimeStamp.String(), a.Content)
+	_, err := s.addStmt.Exec(id, a.Title, a.Details, a.Author, a.Content)
 	return err
 }
 
 // Get an article with the id [id] from the SQLite database.
-func (s *SQLiteStore) Get(id string) (*Article, error) {
+func (s *SQLiteStore) Get(id string) (Article, error) {
+	a := Article{}
 	if id == "" {
-		return nil, ErrEmptyID
+		return a, ErrSQLiteEmptyID
 	}
-	a := &Article{}
-	var tsRaw string
-	err := s.getStmt.QueryRow(id).Scan(&a.Title, &a.Details, &a.Author, &tsRaw, &a.Content)
-	if err != nil {
-		return nil, err
-	}
-	a.TimeStamp = NewTimeStamp(tsRaw)
-	return a, nil
+	err := s.getStmt.QueryRow(id).Scan(&a.Title, &a.Details, &a.Author, &a.Content)
+	return a, err
 }
 
 // Update updates the article with id [id] with the data from [a].
-func (s *SQLiteStore) Update(id string, a *Article) error {
-	_, err := s.updateStmt.Exec(a.Title, a.Details, a.Author, a.TimeStamp.String(), a.Content, id)
+func (s *SQLiteStore) Update(id string, a Article) error {
+	if id == "" {
+		return ErrSQLiteEmptyID
+	}
+	_, err := s.updateStmt.Exec(a.Title, a.Details, a.Author, a.Content, id)
 	return err
 }
 
@@ -70,9 +70,9 @@ func NewSQLiteStore(db *sql.DB, table string) (*SQLiteStore, error) {
 	s := &SQLiteStore{}
 	var err error
 
-	fields := "Title, Details, Author, Date, Content"
-	fieldsHolder := "?, ?, ?, ?, ?"
-	fieldsUpdater := "Title = ?, Details = ?, Author = ?, Date = ?, Content = ?"
+	fields := "Title, Details, Author, Content"
+	fieldsHolder := "?, ?, ?, ?"
+	fieldsUpdater := "Title = ?, Details = ?, Author = ?, Content = ?"
 
 	s.addStmt, err = db.Prepare("INSERT INTO " + table + " (ID , " + fields + ") VALUES (?, " + fieldsHolder + ");")
 	if err != nil {

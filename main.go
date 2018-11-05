@@ -107,5 +107,5 @@ func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 		NotFoundHandler(w, r)
 		return
 	}
-	client.WriteHTML(w, client.ArticlePage(*a))
+	client.WriteHTML(w, client.ArticlePage(a))
 }
