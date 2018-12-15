@@ -1,7 +1,9 @@
 image: golang:latest
 
 cache:
-  - /go/
+  key: ${GO}
+  paths:
+  - go/
 
 stages:
     - get
