@@ -8,7 +8,7 @@ stages:
 get:
   stage: get
   script:
-    - go mod tiny
+    - go mod tidy
     - go get
   artifacts:
     paths:
