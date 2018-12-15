@@ -1,31 +1,26 @@
 image: golang:latest
 
-before_script:
-    - go mod tidy
-
 stages:
-    - test
-    - build
-
-vet:
-  stage: test
-  script:
-    - go vet -v ./...
+  - test
+  - build
+  - deploy
 
 test:
   stage: test
   script:
-    - go test -v ./...
-
-test-race:
-  stage: test
-  script:
-    - go test -v -race ./...
+    - go test -v -failfast -vet -all -race ./...
 
 build:
-    stage: build
-    script:
-      - go build -v -o cf-www
-    artifacts:
-      paths:
-        - cf-www
+  stage: build
+  script:
+    - go build -v -o cf-www
+  artifacts:
+    paths:
+      - cf-www
+
+deploy:
+  stage: deploy
+  script:
+    - echo 'deploy not ready'
+  only:
+    - master
