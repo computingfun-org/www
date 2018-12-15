@@ -1,5 +1,8 @@
 image: golang:latest
 
+cache:
+  - /go/
+
 stages:
     - get
     - test
@@ -9,23 +12,19 @@ get:
   stage: get
   script:
     - go mod tidy
-    - go get
-  artifacts:
-    paths:
-      - $CI_PROJECT_DIR
-      - $GOPATH
-    expire_in: 1 week
 
 test:
     stage: test
     script:
-      - go vet
-      - go test
+      - go vet ./...
+      - go test ./...
+      - go test -race ./...
+      - go test -msan ./...
 
-compile:
+build:
     stage: build
     script:
-      - go build -o $CI_PROJECT_DIR/cf-www
+      - go build -o cf-www
     artifacts:
       paths:
         - cf-www
