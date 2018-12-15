@@ -1,26 +1,26 @@
 image: golang:latest
 
-cache:
-  key: "GOCACHE"
-  paths:
-  - go/
+before_script:
+    - go mod tidy
 
 stages:
-    - get
     - test
     - build
 
-get:
-  stage: get
+vet:
+  stage: test
   script:
-    - go mod tidy
+    - go vet ./...
 
 test:
-    stage: test
-    script:
-      - go vet ./...
-      - go test ./...
-      - go test -race ./...
+  stage: test
+  script:
+    - go test ./...
+
+test-race:
+  stage: test
+  script:
+    - go test -race ./...
 
 build:
     stage: build
