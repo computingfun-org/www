@@ -10,22 +10,22 @@ stages:
 vet:
   stage: test
   script:
-    - go vet ./...
+    - go vet -v ./...
 
 test:
   stage: test
   script:
-    - go test ./...
+    - go test -v ./...
 
 test-race:
   stage: test
   script:
-    - go test -race ./...
+    - go test -v -race ./...
 
 build:
     stage: build
     script:
-      - go build -o cf-www
+      - go build -v -o cf-www
     artifacts:
       paths:
         - cf-www
