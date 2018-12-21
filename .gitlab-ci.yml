@@ -21,6 +21,6 @@ build:
 deploy:
   stage: deploy
   script:
-    - echo 'deploy not ready'
+    - apt-get update -qq && apt-get install -y -qq lftp
   only:
     - master
