@@ -24,6 +24,7 @@ deploy:
     - apt-get update -qq && apt-get install -y -qq sshpass
     - sshpass -V
     - export SSHPASS=$SSH_PASS
-    - sshpass -e scp -o stricthostkeychecking=no -r cf-www $SSH_HOST:/
+    - sshpass -e scp -o stricthostkeychecking=no -r cf-www $SSH_HOST:/root
+    - sshpass -e ssh -o StrictHostKeyChecking=no $SSH_HOST 'reboot'
   only:
     - master
