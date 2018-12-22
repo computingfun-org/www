@@ -22,6 +22,6 @@ deploy:
   stage: deploy
   script:
     - apt-get update -qq && apt-get install -y -qq lftp
-    - lftp -c "open -u $SSH_USER,$SSH_PASS $SSH_HOST; mirror -Rev /cf-www /cf-www"
+    - lftp -c "open -u $SSH_USER,$SSH_PASS $SSH_HOST; mirror -Rev /cf-www ./"
   only:
     - master
