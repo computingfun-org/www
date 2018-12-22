@@ -22,6 +22,6 @@ deploy:
   stage: deploy
   script:
     - apt-get update -qq && apt-get install -y -qq lftp
-    - lftp 
+    - lftp -c "set ftp:ssl-allow no; open -u $SSH_USER,$SSH_PASS $SSH_HOST; mirror -Rev /cf-www /cf-www
   only:
     - master
