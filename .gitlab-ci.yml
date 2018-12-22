@@ -22,5 +22,6 @@ deploy:
   stage: deploy
   script:
     - apt-get update -qq && apt-get install -y -qq lftp
+    - lftp 
   only:
     - master
