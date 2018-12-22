@@ -22,6 +22,6 @@ deploy:
   stage: deploy
   script:
     - export SSHPASS=$SSH_PASS
-    - sshpass -e scp -o stricthostkeychecking=no -r cf-www $SSH_USER@$SSH_HOST.com:
+    - sshpass -e scp -o stricthostkeychecking=no -r cf-www [$SSH_USER]@[$SSH_HOST].com:/
   only:
     - master
