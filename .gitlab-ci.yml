@@ -21,7 +21,7 @@ build:
 deploy:
   stage: deploy
   script:
-    - apt-get update -qq && apt-get install -y -qq lftp
-    - lftp -c "open -u $SSH_USER,$SSH_PASS $SSH_HOST; mirror -Rev /cf-www ./"
+    - export SSHPASS=$SSH_PASS
+    - sshpass -e scp -o stricthostkeychecking=no -r cf-www $SSH_USER@$SSH_HOST.com:
   only:
     - master
