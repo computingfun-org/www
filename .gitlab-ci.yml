@@ -31,5 +31,6 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
     
     - scp cf-www $SSH_USER@$SSH_DOMAIN:$SSH_PATH
+    - scp cf.db $SSH_USER@$SSH_DOMAIN:$SSH_PATH
   only:
     - master
