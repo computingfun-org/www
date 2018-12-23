@@ -21,13 +21,15 @@ build:
 deploy:
   stage: deploy
   script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_KEY")
+    
     - ssh-keyscan $SSH_DOMAIN >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    
     - scp cf-www $SSH_USER@$SSH_DOMAIN:$SSH_PATH
   only:
     - master
