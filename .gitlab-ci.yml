@@ -32,5 +32,6 @@ deploy:
     
     - scp cf-www $SSH_USER@$SSH_DOMAIN:$SSH_PATH
     - scp cf.db $SSH_USER@$SSH_DOMAIN:$SSH_PATH
+    - ssh $SSH_USER@$SSH_DOMAIN reboot
   only:
     - master
