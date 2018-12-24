@@ -23,7 +23,7 @@ deploy:
     - mkdir ~/.ssh
     #- chmod 700 ~/.ssh
     #- eval $(ssh-agent -s)
-    #- ssh-add <(echo "$SSH_KEY")
+    - ssh-add <(echo "$SSH_KEY")
     
     - ssh-keyscan $SSH_DOMAIN >> ~/.ssh/known_hosts
     #- chmod 644 ~/.ssh/known_hosts
