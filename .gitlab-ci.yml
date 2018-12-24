@@ -6,11 +6,13 @@ stages:
   - deploy
 
 test:
+  image: golang:latest
   stage: test
   script:
     - go test -v -failfast -vet -all -race ./...
 
 build:
+  image: golang:latest
   stage: build
   script:
     - go build -v -o cf-www
@@ -19,9 +21,10 @@ build:
       - cf-www
 
 deploy:
+  image: alpine:latest
   stage: deploy
   script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - apk add --no-cache openssh
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - eval $(ssh-agent -s)
