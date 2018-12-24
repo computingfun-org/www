@@ -22,7 +22,7 @@ deploy:
     - apk add openssh
     - mkdir ~/.ssh
     - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_KEY")
+    - bash -c "ssh-add <(echo '$SSH_KEY')"
     - ssh-keyscan -H $SSH_DOMAIN >> ~/.ssh/known_hosts
     
     - ssh $SSH_USER@$SSH_DOMAIN systemctl stop cf-www
