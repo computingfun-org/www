@@ -19,6 +19,8 @@ build:
 deploy:
   image: alpine:latest
   stage: deploy
+  variables:
+    GIT_STRATEGY: none
   script:
     - apk add openssh
     - mkdir ~/.ssh
