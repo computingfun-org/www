@@ -35,6 +35,6 @@ deploy:
     
     - ssh -v $SSH_USER@$SSH_DOMAIN systemctl stop cf-www
     - scp -v cf-www cf.db $SSH_USER@$SSH_DOMAIN:$SSH_PATH
-    - ssh -v $SSH_USER@$SSH_DOMAIN systemctl start cf-www
+    - ssh -v $SSH_USER@$SSH_DOMAIN systemctl start cf-www && systemctl status cf-www
   only:
     - master
