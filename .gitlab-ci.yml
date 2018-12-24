@@ -31,11 +31,11 @@ deploy:
     # /bin/sh: syntax error: unexpected "("
     - apk add bash
     - bash -c "ssh-add <(echo '$SSH_KEY')"
-    - ssh-keyscan -v -H $SSH_DOMAIN >> ~/.ssh/known_hosts
+    - ssh-keyscan -H $SSH_DOMAIN >> ~/.ssh/known_hosts
     
-    - ssh -v $SSH_USER@$SSH_DOMAIN systemctl stop cf-www
-    - scp -v cf-www cf.db $SSH_USER@$SSH_DOMAIN:$SSH_PATH
-    - ssh -v $SSH_USER@$SSH_DOMAIN systemctl start cf-www
-    - ssh -v $SSH_USER@$SSH_DOMAIN systemctl status cf-www
+    - ssh $SSH_USER@$SSH_DOMAIN systemctl stop cf-www
+    - scp cf-www cf.db $SSH_USER@$SSH_DOMAIN:$SSH_PATH
+    - ssh $SSH_USER@$SSH_DOMAIN systemctl start cf-www
+    - ssh $SSH_USER@$SSH_DOMAIN systemctl status cf-www
   only:
     - master
