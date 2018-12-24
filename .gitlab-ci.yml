@@ -24,7 +24,7 @@ deploy:
   image: alpine:latest
   stage: deploy
   script:
-    #- apk add openssh
+    - apk add openssh
     #- mkdir -p ~/.ssh
     #- chmod 700 ~/.ssh
     #- eval $(ssh-agent -s)
