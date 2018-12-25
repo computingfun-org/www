@@ -6,6 +6,6 @@ require (
 	github.com/rakyll/statik v0.1.5
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/quicktemplate v1.0.0
-	gitlab.com/zacc/autocertcache v0.0.0-20181028035343-b20f148df245
+	gitlab.com/zacc/autocertcache v0.0.0-20181225002335-218fee2bc954
 	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
 )

@@ -8,7 +8,7 @@ github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6Kllzaw
 github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyCJ6HpOuEn7z0Csc=
 github.com/valyala/quicktemplate v1.0.0 h1:lDPmM1AetDm736L5ZHGuVkMUA14+I0g3jbxWAozquGM=
 github.com/valyala/quicktemplate v1.0.0/go.mod h1:uX8yrAzr955BRr+rAerWX4V1NHb8bFfsePffuN5lFso=
-gitlab.com/zacc/autocertcache v0.0.0-20181028035343-b20f148df245 h1:8Kd9Y46+ZuqecZUNSZ5q5LiinUOFxBnqX7KRJMKndOA=
-gitlab.com/zacc/autocertcache v0.0.0-20181028035343-b20f148df245/go.mod h1:5YHbyD41i3qaBf3LJUhTnlHCP31b7dOlyGqWS8iMmZc=
+gitlab.com/zacc/autocertcache v0.0.0-20181225002335-218fee2bc954 h1:mzzmT45ihWfhuF6UvPhKdKiBoucM6nFPGa5G61pdzzE=
+gitlab.com/zacc/autocertcache v0.0.0-20181225002335-218fee2bc954/go.mod h1:5YHbyD41i3qaBf3LJUhTnlHCP31b7dOlyGqWS8iMmZc=
 golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9 h1:mKdxBk7AujPs8kU4m80U72y/zjbZ3UcXC7dClwKbUI0=
 golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
