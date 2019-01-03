@@ -1,7 +1,5 @@
 package main
 
-//go:generate go generate ./client
-
 import (
 	"database/sql"
 	"log"
