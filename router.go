@@ -55,10 +55,12 @@ func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 // ArticleHandler responses with an article page for the article with id [:id].
 // If article is not found ArticleHandler responses with NotFoundHandler.
 func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	a, err := ArticleStore.Get(p.ByName("id"))
-	if err != nil {
-		NotFoundHandler(w, r)
-		return
-	}
-	client.WriteHTML(w, client.ArticlePage(a))
+	/*
+		a, err := ArticleStore.Get(p.ByName("id"))
+		if err != nil {
+			NotFoundHandler(w, r)
+			return
+		}
+		client.WriteHTML(w, client.ArticlePage(a))
+	*/
 }

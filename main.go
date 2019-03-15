@@ -5,16 +5,10 @@ import (
 	"log"
 	"net/http"
 
-	"gitlab.com/computingfun/www/articles"
 	"gitlab.com/zacc/autocertcache"
 	"golang.org/x/crypto/acme/autocert"
 
 	_ "github.com/mattn/go-sqlite3"
-)
-
-var (
-	// ArticleStore is the storage for articles.
-	ArticleStore *articles.SQLiteStore
 )
 
 func main() {
@@ -24,11 +18,13 @@ func main() {
 	}
 	defer db.Close()
 
-	ArticleStore, err = articles.NewSQLiteStore(db, "Articles")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer ArticleStore.Close()
+	/*
+		ArticleStore, err = articles.NewSQLiteStore(db, "Articles")
+		if err != nil {
+			log.Fatalln(err)
+		}
+		defer ArticleStore.Close()
+	*/
 
 	certCache, err := autocertcache.NewSQLite(db, "Certs")
 	if err != nil {
