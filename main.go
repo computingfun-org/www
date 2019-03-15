@@ -43,6 +43,9 @@ func main() {
 		TLSConfig: cert.TLSConfig(),
 	}
 
+	// DEGUG SERVER
+	//log.Fatalln(server.ListenAndServe())
+
 	go func() {
 		err := http.ListenAndServe("", cert.HTTPHandler(nil))
 		log.Fatalln(err)

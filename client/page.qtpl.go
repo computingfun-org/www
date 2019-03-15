@@ -107,39 +107,41 @@ func StreamHTML(qw422016 *qt422016.Writer, p Page) {
 	streamnavLink(qw422016, "Articles", "https://computingfun.org/articles/", "far fa-newspaper", "#77ab59")
 	//line page.qtpl:39
 	streamnavLink(qw422016, "Live", "#", "fab fa-twitch", "#6441A4")
-	//line page.qtpl:40
+	//line page.qtpl:39
+	qw422016.N().S(`<a id="dark-btn" href="#" onclick="document.getElementsByTagName('body')[0].classList.toggle('dark');">Light/Dark Theme<i class="fas fa-palette"></i></a>`)
+	//line page.qtpl:41
 	p.streamnavLinks(qw422016)
-	//line page.qtpl:40
+	//line page.qtpl:41
 	qw422016.N().S(`</nav><main style="margin: auto; width: 80%; z-index: 0;">`)
-	//line page.qtpl:43
+	//line page.qtpl:44
 	p.streambody(qw422016)
-	//line page.qtpl:43
+	//line page.qtpl:44
 	qw422016.N().S(`</main></body></html>`)
-//line page.qtpl:48
+//line page.qtpl:49
 }
 
-//line page.qtpl:48
+//line page.qtpl:49
 func WriteHTML(qq422016 qtio422016.Writer, p Page) {
-	//line page.qtpl:48
+	//line page.qtpl:49
 	qw422016 := qt422016.AcquireWriter(qq422016)
-	//line page.qtpl:48
+	//line page.qtpl:49
 	StreamHTML(qw422016, p)
-	//line page.qtpl:48
+	//line page.qtpl:49
 	qt422016.ReleaseWriter(qw422016)
-//line page.qtpl:48
+//line page.qtpl:49
 }
 
-//line page.qtpl:48
+//line page.qtpl:49
 func HTML(p Page) string {
-	//line page.qtpl:48
+	//line page.qtpl:49
 	qb422016 := qt422016.AcquireByteBuffer()
-	//line page.qtpl:48
+	//line page.qtpl:49
 	WriteHTML(qb422016, p)
-	//line page.qtpl:48
+	//line page.qtpl:49
 	qs422016 := string(qb422016.B)
-	//line page.qtpl:48
+	//line page.qtpl:49
 	qt422016.ReleaseByteBuffer(qb422016)
-	//line page.qtpl:48
+	//line page.qtpl:49
 	return qs422016
-//line page.qtpl:48
+//line page.qtpl:49
 }
