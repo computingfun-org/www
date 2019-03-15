@@ -42,14 +42,12 @@ func main() {
 		Handler:   NewRouter(),
 		TLSConfig: cert.TLSConfig(),
 	}
-	/*
-		go func() {
-			err := http.ListenAndServe("", cert.HTTPHandler(nil))
-			log.Fatalln(err)
-		}()
 
-		err = server.ListenAndServeTLS("", "")
+	go func() {
+		err := http.ListenAndServe("", cert.HTTPHandler(nil))
 		log.Fatalln(err)
-	*/
-	log.Fatalln(server.ListenAndServe())
+	}()
+
+	err = server.ListenAndServeTLS("", "")
+	log.Fatalln(err)
 }
