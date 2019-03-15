@@ -30,7 +30,15 @@ func (a ArticlePage) streamhead(qw422016 *qt422016.Writer) {
 	//line article.qtpl:8
 	qw422016.E().S(a.Title)
 	//line article.qtpl:8
-	qw422016.N().S(`- Computing Fun</title><meta name="description" content="<%=s a.Details %>"><meta name="author" content=""><link rel="stylesheet" type="text/css" href="/client/pages/articles.css"><link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css"><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>`)
+	qw422016.N().S(`- Computing Fun</title><meta name="description" content="`)
+	//line article.qtpl:9
+	qw422016.E().S(a.Details)
+	//line article.qtpl:9
+	qw422016.N().S(`"><meta name="author" content="`)
+	//line article.qtpl:10
+	qw422016.E().S(a.Author)
+	//line article.qtpl:10
+	qw422016.N().S(`"><link rel="stylesheet" type="text/css" href="/client/pages/articles.css"><link rel="stylesheet" type="text/css" href="/client/base/prettyprint.css"><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>`)
 //line article.qtpl:14
 }
 
@@ -71,7 +79,11 @@ func (a ArticlePage) streambody(qw422016 *qt422016.Writer) {
 	//line article.qtpl:23
 	qw422016.E().S(a.Details)
 	//line article.qtpl:23
-	qw422016.N().S(`</h2><div style="display: none;" class="info"><address><a rel="author" href="#"></a></address><time pubdate datetime=""></time></div></header><div class="article-content">`)
+	qw422016.N().S(`</h2><div style="display: none;" class="info"><address><a rel="author" href="#">`)
+	//line article.qtpl:25
+	qw422016.E().S(a.Author)
+	//line article.qtpl:25
+	qw422016.N().S(`</a></address><time pubdate datetime=""></time></div></header><div class="article-content">`)
 	//line article.qtpl:28
 	qw422016.N().S(a.Content)
 	//line article.qtpl:28

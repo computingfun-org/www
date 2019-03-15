@@ -92,23 +92,21 @@ func navLink(text, link, icon, color string) string {
 //line page.qtpl:15
 func StreamHTML(qw422016 *qt422016.Writer, p Page) {
 	//line page.qtpl:15
-	qw422016.N().S(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="/client/ico/fav.ico"><link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png"><link rel="stylesheet" type="text/css" href="/client/base/nav.css"><link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">`)
-	//line page.qtpl:27
+	qw422016.N().S(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="/client/ico/fav.ico"><link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png"><link rel="stylesheet" type="text/css" href="/client/base/body.css"><link rel="stylesheet" type="text/css" href="/client/base/nav.css"><link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">`)
+	//line page.qtpl:28
 	p.streamhead(qw422016)
-	//line page.qtpl:27
-	qw422016.N().S(`</head><body style="background-color: whitesmoke;"><nav class="navbar"><div>Computing Fun</div><img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">`)
-	//line page.qtpl:34
-	streamnavLink(qw422016, "Channel", "https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA", "fab fa-youtube", "#ff0000")
+	//line page.qtpl:28
+	qw422016.N().S(`</head><body><nav><div>Computing Fun</div><img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">`)
 	//line page.qtpl:35
-	streamnavLink(qw422016, "Patron", "https://www.patreon.com/computingfun", "fab fa-patreon", "#f85944")
+	streamnavLink(qw422016, "Channel", "https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA", "fab fa-youtube", "#ff0000")
 	//line page.qtpl:36
-	streamnavLink(qw422016, "Games", "https://computingfun.org/games/", "fas fa-gamepad", "#171A21")
+	streamnavLink(qw422016, "Patron", "https://www.patreon.com/computingfun", "fab fa-patreon", "#f85944")
 	//line page.qtpl:37
-	streamnavLink(qw422016, "Articles", "https://computingfun.org/articles/", "far fa-newspaper", "#77ab59")
+	streamnavLink(qw422016, "Games", "https://computingfun.org/games/", "fas fa-gamepad", "#171A21")
 	//line page.qtpl:38
-	streamnavLink(qw422016, "Facebook", "https://www.facebook.com/ComputingFun/", "fab fa-facebook-f", "#3B5998")
+	streamnavLink(qw422016, "Articles", "https://computingfun.org/articles/", "far fa-newspaper", "#77ab59")
 	//line page.qtpl:39
-	streamnavLink(qw422016, "Live", "#", "fab fa-youtube", "#6441A4")
+	streamnavLink(qw422016, "Live", "#", "fab fa-twitch", "#6441A4")
 	//line page.qtpl:40
 	p.streamnavLinks(qw422016)
 	//line page.qtpl:40

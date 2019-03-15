@@ -22,21 +22,21 @@ interface Page {
         <link rel="shortcut icon" href="/client/ico/fav.ico">
         <link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192">
         <link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png">
+        <link rel="stylesheet" type="text/css" href="/client/base/body.css">
         <link rel="stylesheet" type="text/css" href="/client/base/nav.css">
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         {%= p.head() %}
     </head>
 
-    <body style="background-color: whitesmoke;">
-        <nav class="navbar">
+    <body>
+        <nav>
             <div>Computing Fun</div>
             <img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">
             {%= navLink("Channel", "https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA", "fab fa-youtube", "#ff0000") %}
             {%= navLink("Patron", "https://www.patreon.com/computingfun", "fab fa-patreon", "#f85944") %}
             {%= navLink("Games", "https://computingfun.org/games/", "fas fa-gamepad", "#171A21") %}
             {%= navLink("Articles", "https://computingfun.org/articles/", "far fa-newspaper", "#77ab59") %}
-            {%= navLink("Facebook", "https://www.facebook.com/ComputingFun/", "fab fa-facebook-f", "#3B5998") %}
-            {%= navLink("Live", "#", "fab fa-youtube", "#6441A4") %}
+            {%= navLink("Live", "#", "fab fa-twitch", "#6441A4") %}
             {%= p.navLinks() %}
         </nav>
         <main style="margin: auto; width: 80%; z-index: 0;">

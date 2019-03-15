@@ -14,7 +14,6 @@
     <a style="background-color: #f85944;" href="https://www.patreon.com/computingfun"><i class="fab fa-patreon"></i></a>
     <a style="background-color: #171A21;" href="https://computingfun.org/games/"><i class="fas fa-gamepad"></i></a>
     <a style="background-color: #77ab59;" href="https://computingfun.org/articles/"><i class="far fa-newspaper"></i></a>
-    <a style="background-color: #3B5998;" href="https://www.facebook.com/ComputingFun/"><i class="fab fa-facebook-f"></i></a>
     <a style="background-color: #6441A4;" href="#"><i class="fab fa-twitch"></i></a>
 </div>
 {% endfunc %}

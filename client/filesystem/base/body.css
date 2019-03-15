@@ -1,0 +1,7 @@
+body {
+    background-color: whitesmoke;
+}
+
+body.dark {
+    background-color: black;
+}
