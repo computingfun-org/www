@@ -2,61 +2,63 @@ package articles
 
 import (
 	"database/sql"
-	"errors"
 )
 
-// ErrSQLiteEmptyID is the error used when an empty string is given as an article is.
-var ErrSQLiteEmptyID = errors.New("articles.SQLiteStore: Can't use empty string as id")
-
-// SQLiteStore is a SQLite ArticleStore.
-type SQLiteStore struct {
+// SQLiteArticleStore is a SQLite store for articles.
+type SQLiteArticleStore struct {
 	addStmt    *sql.Stmt
 	getStmt    *sql.Stmt
 	updateStmt *sql.Stmt
 	removeStmt *sql.Stmt
 }
 
-var _ Store = &SQLiteStore{}
+var _ ArticleStore = &SQLiteArticleStore{}
 
 // Add an article [a] to the SQLite database with the ID [id].
-func (s *SQLiteStore) Add(id string, a Article) error {
-	if id == "" {
-		return ErrSQLiteEmptyID
-	}
-	_, err := s.addStmt.Exec(id, a.Title, a.Details, a.Author, a.Content)
+func (s *SQLiteArticleStore) Add(a Article) error {
+	_, err := s.addStmt.Exec(
+		a.Author,
+		a.Title,
+		a.Details,
+		a.Content,
+		a.Created,
+		a.Modified)
 	return err
 }
 
 // Get an article with the id [id] from the SQLite database.
-func (s *SQLiteStore) Get(id string) (Article, error) {
+func (s *SQLiteArticleStore) Get(id string) (Article, error) {
 	a := Article{}
-	if id == "" {
-		return a, ErrSQLiteEmptyID
-	}
-	err := s.getStmt.QueryRow(id).Scan(&a.Title, &a.Details, &a.Author, &a.Content)
+	err := s.getStmt.QueryRow(id).Scan(
+		&a.Author,
+		&a.Title,
+		&a.Details,
+		&a.Content,
+		&a.Created,
+		&a.Modified)
 	return a, err
 }
 
 // Update updates the article with id [id] with the data from [a].
-func (s *SQLiteStore) Update(id string, a Article) error {
-	if id == "" {
-		return ErrSQLiteEmptyID
-	}
-	_, err := s.updateStmt.Exec(a.Title, a.Details, a.Author, a.Content, id)
+func (s *SQLiteArticleStore) Update(id string, a Article) error {
+	_, err := s.updateStmt.Exec(
+		a.Author,
+		a.Title,
+		a.Details,
+		a.Content,
+		a.Created,
+		a.Modified)
 	return err
 }
 
 // Remove an article with the id [id] from the SQLite database.
-func (s *SQLiteStore) Remove(id string) error {
-	if id == "" {
-		return nil
-	}
+func (s *SQLiteArticleStore) Remove(id string) error {
 	_, err := s.removeStmt.Exec(id)
 	return err
 }
 
 // Close statments used by [s].
-func (s *SQLiteStore) Close() error {
+func (s *SQLiteArticleStore) Close() error {
 	s.removeStmt.Close()
 	s.updateStmt.Close()
 	s.getStmt.Close()
@@ -64,22 +66,35 @@ func (s *SQLiteStore) Close() error {
 	return nil
 }
 
-// NewSQLiteStore returns a SQLiteStore using the file at [filepath] and table name [table].
+// NewSQLiteArticleStore returns a SQLiteStore using the file at [filepath] and table name [table].
 // If no table [table] exists, NewSQLiteStore will create one.
-func NewSQLiteStore(db *sql.DB, table string) (*SQLiteStore, error) {
-	s := &SQLiteStore{}
+func NewSQLiteArticleStore(db *sql.DB, table string) (*SQLiteArticleStore, error) {
+	s := &SQLiteArticleStore{}
 	var err error
 
-	fields := "Title, Details, Author, Content"
-	fieldsHolder := "?, ?, ?, ?"
-	fieldsUpdater := "Title = ?, Details = ?, Author = ?, Content = ?"
+	fields := []string{"Author", "Title", "Details", "Content", "Created", "Modified"}
+	fieldsLen := len(fields)
 
-	s.addStmt, err = db.Prepare("INSERT INTO " + table + " (ID , " + fields + ") VALUES (?, " + fieldsHolder + ");")
+	fieldsList := ""
+	fieldsHolder := ""
+	fieldsUpdater := ""
+	for i := 0; i < fieldsLen; i++ {
+		fieldsList += fields[i]
+		fieldsHolder += "?"
+		fieldsUpdater += fields[i] + " = ?"
+		if i != fieldsLen-1 {
+			fieldsList += ", "
+			fieldsHolder += ", "
+			fieldsUpdater += ", "
+		}
+	}
+
+	s.addStmt, err = db.Prepare("INSERT INTO " + table + " (ID , " + fieldsList + ") VALUES (?, " + fieldsHolder + ");")
 	if err != nil {
 		return nil, err
 	}
 
-	s.getStmt, err = db.Prepare("SELECT " + fields + " FROM " + table + " WHERE ID = ? LIMIT 1;")
+	s.getStmt, err = db.Prepare("SELECT " + fieldsList + " FROM " + table + " WHERE ID = ? LIMIT 1;")
 	if err != nil {
 		return nil, err
 	}
