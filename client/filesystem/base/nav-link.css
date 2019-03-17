@@ -1,0 +1,20 @@
+#nav-link-yt { background-color: #ff0000; }
+#nav-link-yt.dark-theme { background-color: #282828; }
+
+#nav-link-patron { background-color: #f85944; }
+#nav-link-patron.dark-theme { background-color: #012847; }
+
+#nav-link-game { background-color: #171A21; }
+#nav-link-game.dark-theme { background-color: darkblue; }
+
+#nav-link-article { background-color: #77ab59; }
+#nav-link-article.dark-theme { background-color: darkgreen; }
+
+#nav-link-twitch { background-color: #6441A4; }
+#nav-link-twitch.dark-theme { background-color: black; }
+
+#nav-link-mode { background-color: darkblue; }
+#nav-link-mode.dark-theme { background-color: grey; }
+
+#nav-link-mode span:before { content: "Dark"; }
+#nav-link-mode.dark-theme span:before { content: "Light"; }

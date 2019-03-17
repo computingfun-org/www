@@ -41,123 +41,46 @@ type Page interface {
 }
 
 //line page.qtpl:11
-func streamnavLink(qw422016 *qt422016.Writer, id, text, link, icon, color, dark string) {
-	//line page.qtpl:11
-	qw422016.N().S(`<a id="`)
-	//line page.qtpl:12
-	qw422016.N().S(id)
-	//line page.qtpl:12
-	qw422016.N().S(`" href="`)
-	//line page.qtpl:12
-	qw422016.N().S(link)
-	//line page.qtpl:12
-	qw422016.N().S(`" class="dark-theme-tag">`)
-	//line page.qtpl:12
-	qw422016.N().S(text)
-	//line page.qtpl:12
-	qw422016.N().S(`<i class="`)
-	//line page.qtpl:12
-	qw422016.N().S(icon)
-	//line page.qtpl:12
-	qw422016.N().S(`"></i></a><style>#`)
-	//line page.qtpl:13
-	qw422016.N().S(id)
-	//line page.qtpl:13
-	qw422016.N().S(`{ background-color:`)
-	//line page.qtpl:13
-	qw422016.N().S(color)
-	//line page.qtpl:13
-	qw422016.N().S(`; } #`)
-	//line page.qtpl:13
-	qw422016.N().S(id)
-	//line page.qtpl:13
-	qw422016.N().S(`.dark-theme { background-color:`)
-	//line page.qtpl:13
-	qw422016.N().S(dark)
-	//line page.qtpl:13
-	qw422016.N().S(`; }</style>`)
-//line page.qtpl:14
-}
-
-//line page.qtpl:14
-func writenavLink(qq422016 qtio422016.Writer, id, text, link, icon, color, dark string) {
-	//line page.qtpl:14
-	qw422016 := qt422016.AcquireWriter(qq422016)
-	//line page.qtpl:14
-	streamnavLink(qw422016, id, text, link, icon, color, dark)
-	//line page.qtpl:14
-	qt422016.ReleaseWriter(qw422016)
-//line page.qtpl:14
-}
-
-//line page.qtpl:14
-func navLink(id, text, link, icon, color, dark string) string {
-	//line page.qtpl:14
-	qb422016 := qt422016.AcquireByteBuffer()
-	//line page.qtpl:14
-	writenavLink(qb422016, id, text, link, icon, color, dark)
-	//line page.qtpl:14
-	qs422016 := string(qb422016.B)
-	//line page.qtpl:14
-	qt422016.ReleaseByteBuffer(qb422016)
-	//line page.qtpl:14
-	return qs422016
-//line page.qtpl:14
-}
-
-//line page.qtpl:16
 func StreamHTML(qw422016 *qt422016.Writer, p Page) {
-	//line page.qtpl:16
-	qw422016.N().S(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="/client/ico/fav.ico"><link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png"><link rel="stylesheet" type="text/css" href="/client/base/body.css"><link rel="stylesheet" type="text/css" href="/client/base/nav.css"><link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"><script src="/client/base/dark-theme.js"></script>`)
-	//line page.qtpl:29
+	//line page.qtpl:11
+	qw422016.N().S(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="/client/ico/fav.ico"><link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png"><link rel="stylesheet" type="text/css" href="/client/base/body.css"><link rel="stylesheet" type="text/css" href="/client/base/nav.css"><link rel="stylesheet" type="text/css" href="/client/base/nav-link.css"><link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"><script src="/client/base/dark-theme.js" async defer></script>`)
+	//line page.qtpl:25
 	p.streamhead(qw422016)
-	//line page.qtpl:29
-	qw422016.N().S(`</head><body class="dark-theme-tag"><nav class="dark-theme-tag"><div>Computing Fun</div><img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">`)
-	//line page.qtpl:35
-	streamnavLink(qw422016, "yt-nav-link", "Channel", "https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA", "fab fa-youtube", "#ff0000", "#282828")
-	//line page.qtpl:36
-	streamnavLink(qw422016, "patron-nav-link", "Patron", "https://www.patreon.com/computingfun", "fab fa-patreon", "#f85944", "#012847")
+	//line page.qtpl:25
+	qw422016.N().S(`</head><body onload="DarkThemeLoad();" class="dark-theme-tag"><nav class="dark-theme-tag"><div>Computing Fun</div><img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50"><a id="nav-link-yt" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA" class="dark-theme-tag"><span>Channel</span><i class="fab fa-youtube"></i></a><a id="nav-link-patron" href="https://www.patreon.com/computingfun" class="dark-theme-tag"><span>Patron</span><i class="fab fa-patreon"></i></a><a id="nav-link-game" href="https://computingfun.org/games/" class="dark-theme-tag"><span>Games</span><i class="fas fa-gamepad"></i></a><a id="nav-link-article" href="https://computingfun.org/articles/" class="dark-theme-tag"><span>Articles</span><i class="far fa-newspaper"></i></a><a id="nav-link-twitch" href="#" class="dark-theme-tag"><span>Live</span><i class="fab fa-twitch"></i></a><a id="nav-link-mode" href="#" onclick="DarkThemeToggle();" class="dark-theme-tag"><span> Mode</span><i class="fas fa-palette"></i></a>`)
 	//line page.qtpl:37
-	streamnavLink(qw422016, "game-nav-link", "Games", "https://computingfun.org/games/", "fas fa-gamepad", "#171A21", "darkblue")
-	//line page.qtpl:38
-	streamnavLink(qw422016, "article-nav-link", "Articles", "https://computingfun.org/articles/", "far fa-newspaper", "#77ab59", "darkgreen")
-	//line page.qtpl:39
-	streamnavLink(qw422016, "twitch-nav-link", "Live", "#", "fab fa-twitch", "#6441A4", "black")
-	//line page.qtpl:39
-	qw422016.N().S(`<a id="theme-nav-link" href="#" class="dark-theme-tag" onclick="DarkThemeToggle();">Light/Dark<i class="fas fa-palette"></i></a><style>#theme-nav-link { background-color: darkblue; } #theme-nav-link.dark-theme { background-color: grey; }</style>`)
-	//line page.qtpl:42
 	p.streamnavLinks(qw422016)
-	//line page.qtpl:42
+	//line page.qtpl:37
 	qw422016.N().S(`</nav><main>`)
-	//line page.qtpl:45
+	//line page.qtpl:40
 	p.streambody(qw422016)
-	//line page.qtpl:45
-	qw422016.N().S(`</main><script>DarkThemeLoad();</script></body></html>`)
-//line page.qtpl:50
+	//line page.qtpl:40
+	qw422016.N().S(`</main></body></html>`)
+//line page.qtpl:44
 }
 
-//line page.qtpl:50
+//line page.qtpl:44
 func WriteHTML(qq422016 qtio422016.Writer, p Page) {
-	//line page.qtpl:50
+	//line page.qtpl:44
 	qw422016 := qt422016.AcquireWriter(qq422016)
-	//line page.qtpl:50
+	//line page.qtpl:44
 	StreamHTML(qw422016, p)
-	//line page.qtpl:50
+	//line page.qtpl:44
 	qt422016.ReleaseWriter(qw422016)
-//line page.qtpl:50
+//line page.qtpl:44
 }
 
-//line page.qtpl:50
+//line page.qtpl:44
 func HTML(p Page) string {
-	//line page.qtpl:50
+	//line page.qtpl:44
 	qb422016 := qt422016.AcquireByteBuffer()
-	//line page.qtpl:50
+	//line page.qtpl:44
 	WriteHTML(qb422016, p)
-	//line page.qtpl:50
+	//line page.qtpl:44
 	qs422016 := string(qb422016.B)
-	//line page.qtpl:50
+	//line page.qtpl:44
 	qt422016.ReleaseByteBuffer(qb422016)
-	//line page.qtpl:50
+	//line page.qtpl:44
 	return qs422016
-//line page.qtpl:50
+//line page.qtpl:44
 }

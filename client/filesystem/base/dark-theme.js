@@ -2,10 +2,10 @@
 
 const DarkThemeClassListener = "dark-theme-tag";
 const DarkThemeClassTag = "dark-theme";
-const DarkThemeStorageKey = "dark_theme"
+const DarkThemeStorageKey = "dark_theme";
 
 function DarkThemeLoad() {
-    if (DarkThemeIsOn()) {
+    if (localStorage.getItem(DarkThemeStorageKey) !== null) {
         DarkThemeOn();
     } else {
         DarkThemeOff();
@@ -13,23 +13,15 @@ function DarkThemeLoad() {
 }
 
 function DarkThemeToggle() {
-    if (DarkThemeIsOn()) {
+    if (localStorage.getItem(DarkThemeStorageKey) !== null) {
         DarkThemeOff();
     } else {
         DarkThemeOn();
     }
 }
 
-function DarkThemeIsOn() {
-    return localStorage.getItem(DarkThemeStorageKey) !== null;
-}
-
-function DarkThemeListeners() {
-    return document.getElementsByClassName(DarkThemeClassListener);
-}
-
 function DarkThemeOn() {
-    let listeners = DarkThemeListeners();
+    let listeners = document.getElementsByClassName(DarkThemeClassListener);
     let len = listeners.length;
     for (let i = 0; i < len; i++) {
         listeners[i].classList.add(DarkThemeClassTag);
@@ -38,7 +30,7 @@ function DarkThemeOn() {
 }
 
 function DarkThemeOff() {
-    let listeners = DarkThemeListeners();
+    let listeners = document.getElementsByClassName(DarkThemeClassListener);
     let len = listeners.length;
     for (let i = 0; i < len; i++) {
         listeners[i].classList.remove(DarkThemeClassTag);
