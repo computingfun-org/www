@@ -91,7 +91,7 @@ func (e ErrPage) head() string {
 //line err.qtpl:43
 func (e ErrPage) streambody(qw422016 *qt422016.Writer) {
 	//line err.qtpl:43
-	qw422016.N().S(`<img class="icon" src="/client/ico/250r.png" alt="Computing Fun Error" height="250" width="250"><div class="message">`)
+	qw422016.N().S(`<img class="icon" src="/client/ico/250r.png" alt="Computing Fun Error" height="250" width="250"><div class="message dark-theme-tag">`)
 	//line err.qtpl:46
 	qw422016.N().S(e.Message)
 	//line err.qtpl:46
