@@ -2,7 +2,7 @@ nav {
   position: fixed;
   top: 0;
   left: -240px;
-  transition: left 0.3s, background-color 0.5s;
+  transition: left 0.3s, background-color 0.5s;;
   height: 100%;
   width: 250px;
   z-index: 10;
@@ -35,7 +35,7 @@ nav div {
   margin-bottom: 10px;
   width: 240px;
   text-align: center;
-  transition: padding-right 0.3s, background-color 0.5s;
+  transition: padding-right 0.3s;
   border-radius: 0px 5px 5px 0px;
 }
 
@@ -87,7 +87,7 @@ nav:hover {
   background-color: whitesmoke;
 }
 
-body.dark nav:hover {
+nav.dark-theme:hover {
   background-color: black;
 }
 
@@ -95,10 +95,6 @@ nav div {
   background-color: #8dc63f;
 }
 
-#dark-btn {
-  background-color: darkblue;
-}
-
-body.dark nav #dark-btn {
-  background-color: darkgrey;
+nav.dark-theme div {
+  background-color: #547524;
 }

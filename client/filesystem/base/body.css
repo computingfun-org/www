@@ -1,8 +1,13 @@
 body {
-    transition: background-color 1s;
     background-color: whitesmoke;
 }
 
-body.dark {
+body.dark-theme {
     background-color: black;
+}
+
+main {
+    margin: auto;
+    width: 80%;
+    z-index: 0;
 }

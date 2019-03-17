@@ -8,14 +8,14 @@ interface Page {
 
 {% stripspace %}
 
-{% func navLink(text, link, icon, color string) %}
-<a style="background-color: {%s= color %};" href="{%s= link %}">{%s= text %}<i class="{%s= icon %}"></i></a>
+{% func navLink(id, text, link, icon, color, dark string) %}
+<a id="{%s= id %}" href="{%s= link %}" class="dark-theme-tag">{%s= text %}<i class="{%s= icon %}"></i></a>
+<style>#{%s= id %} { background-color: {%s= color %}; } #{%s= id %}.dark-theme { background-color: {%s= dark %}; }</style>
 {% endfunc %}
 
 {% func HTML(p Page) %}
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,26 +25,27 @@ interface Page {
         <link rel="stylesheet" type="text/css" href="/client/base/body.css">
         <link rel="stylesheet" type="text/css" href="/client/base/nav.css">
         <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <script src="/client/base/dark-theme.js"></script>
         {%= p.head() %}
     </head>
-
-    <body>
-        <nav>
+    <body class="dark-theme-tag">
+        <nav class="dark-theme-tag">
             <div>Computing Fun</div>
             <img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50">
-            {%= navLink("Channel", "https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA", "fab fa-youtube", "#ff0000") %}
-            {%= navLink("Patron", "https://www.patreon.com/computingfun", "fab fa-patreon", "#f85944") %}
-            {%= navLink("Games", "https://computingfun.org/games/", "fas fa-gamepad", "#171A21") %}
-            {%= navLink("Articles", "https://computingfun.org/articles/", "far fa-newspaper", "#77ab59") %}
-            {%= navLink("Live", "#", "fab fa-twitch", "#6441A4") %}
-            <a id="dark-btn" href="#" onclick="document.getElementsByTagName('body')[0].classList.toggle('dark');">Light/Dark Theme<i class="fas fa-palette"></i></a>
+            {%= navLink("yt-nav-link", "Channel", "https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA", "fab fa-youtube", "#ff0000", "#282828") %}
+            {%= navLink("patron-nav-link", "Patron", "https://www.patreon.com/computingfun", "fab fa-patreon", "#f85944", "#012847") %}
+            {%= navLink("game-nav-link", "Games", "https://computingfun.org/games/", "fas fa-gamepad", "#171A21", "darkblue") %}
+            {%= navLink("article-nav-link", "Articles", "https://computingfun.org/articles/", "far fa-newspaper", "#77ab59", "darkgreen") %}
+            {%= navLink("twitch-nav-link", "Live", "#", "fab fa-twitch", "#6441A4", "black") %}
+            <a id="theme-nav-link" href="#" class="dark-theme-tag" onclick="DarkThemeToggle();">Light/Dark<i class="fas fa-palette"></i></a>
+            <style>#theme-nav-link { background-color: darkblue; } #theme-nav-link.dark-theme { background-color: grey; }</style>
             {%= p.navLinks() %}
         </nav>
-        <main style="margin: auto; width: 80%; z-index: 0;">
+        <main>
             {%= p.body() %}
         </main>
+        <script>DarkThemeLoad();</script>
     </body>
-
 </html>
 {% endfunc %}
 
