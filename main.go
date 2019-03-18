@@ -1,41 +1,27 @@
 package main
 
 import (
-	"database/sql"
+	"context"
 	"log"
 	"net/http"
 
-	"gitlab.com/zacc/autocertcache"
 	"golang.org/x/crypto/acme/autocert"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
-	db, err := sql.Open("sqlite3", "./cf.db")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer db.Close()
 
-	/*
-		ArticleStore, err = articles.NewSQLiteStore(db, "Articles")
-		if err != nil {
-			log.Fatalln(err)
-		}
-		defer ArticleStore.Close()
-	*/
-
-	certCache, err := autocertcache.NewSQLite(db, "Certs")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer certCache.Close()
+	store, err := NewDataStore(context.TODO(), "")
 
 	cert := autocert.Manager{
-		Cache:      certCache,
+		Cache: AutoCertFireStorm{
+			Client:     store,
+			Collection: "certs",
+		},
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: autocert.HostWhitelist("www.computingfun.org"),
+		Email:      "security@computingfun.org",
 	}
 
 	server := http.Server{
