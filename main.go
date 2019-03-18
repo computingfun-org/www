@@ -12,7 +12,7 @@ import (
 
 func main() {
 
-	store, err := NewDataStore(context.TODO(), "")
+	store, err := NewDataStore(context.TODO(), "credentials.json")
 
 	cert := autocert.Manager{
 		Cache: AutoCertFireStorm{
