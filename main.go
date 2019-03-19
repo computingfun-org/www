@@ -29,6 +29,15 @@ func main() {
 		TLSConfig: cert.TLSConfig(),
 	}
 
+	fst := AutoCertFireStorm{
+		Client:     store,
+		Collection: "certsTest",
+	}
+
+	err = fst.Put(context.TODO(), "Hello", []byte("World"))
+	log.Println("TEST")
+	log.Println(err)
+
 	// DEGUG SERVER
 	//log.Fatalln(server.ListenAndServe())
 
