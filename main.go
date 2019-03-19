@@ -38,6 +38,11 @@ func main() {
 	log.Println("TEST")
 	log.Println(err)
 
+	test2, err := fst.Get(context.TODO(), "Hello")
+	log.Println("Test 2")
+	log.Println(test2)
+	log.Println(err)
+
 	// DEGUG SERVER
 	//log.Fatalln(server.ListenAndServe())
 

@@ -37,11 +37,9 @@ func (acfs AutoCertFireStorm) Get(ctx context.Context, key string) ([]byte, erro
 	if err != nil {
 		return nil, autocert.ErrCacheMiss
 	}
-	var bytes []byte
-	if dsnap.DataTo(&bytes) != nil {
-		return nil, autocert.ErrCacheMiss
-	}
-	return bytes, nil
+	var fsdata fireStormData
+	err = dsnap.DataTo(&fsdata)
+	return fsdata.Data, err
 }
 
 // Put ...
