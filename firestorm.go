@@ -27,6 +27,10 @@ type AutoCertFireStorm struct {
 
 var _ autocert.Cache = AutoCertFireStorm{}
 
+type fireStormData struct {
+	Data []byte
+}
+
 // Get ...
 func (acfs AutoCertFireStorm) Get(ctx context.Context, key string) ([]byte, error) {
 	dsnap, err := acfs.Client.Collection(acfs.Collection).Doc(key).Get(ctx)
@@ -42,7 +46,7 @@ func (acfs AutoCertFireStorm) Get(ctx context.Context, key string) ([]byte, erro
 
 // Put ...
 func (acfs AutoCertFireStorm) Put(ctx context.Context, key string, data []byte) error {
-	_, err := acfs.Client.Collection(acfs.Collection).Doc(key).Set(ctx, data)
+	_, err := acfs.Client.Collection(acfs.Collection).Doc(key).Set(ctx, fireStormData{Data: data})
 	return err
 }
 
