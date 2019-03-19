@@ -8,9 +8,6 @@ build:
   variables:
     GIT_STRATEGY: clone
   script:
-    - go mod tidy -v
-    - go get -v
-    - go test -v -failfast -vet -all -race ./...
     - go build -v -o cf-www
   artifacts:
     paths:
