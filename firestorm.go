@@ -50,8 +50,6 @@ func (acfs AutoCertFireStorm) Put(ctx context.Context, key string, data []byte) 
 
 // Delete ...
 func (acfs AutoCertFireStorm) Delete(ctx context.Context, key string) error {
-	_, err := acfs.Client.Collection(acfs.Collection).Doc(key).Update(ctx, []firestore.Update{
-		{Path: key, Value: firestore.Delete},
-	})
+	_, err := acfs.Client.Collection(acfs.Collection).Doc(key).Delete(ctx)
 	return err
 }

@@ -34,14 +34,7 @@ func main() {
 		Collection: "certsTest",
 	}
 
-	err = fst.Put(context.TODO(), "Hello", []byte("World"))
-	log.Println("TEST")
-	log.Println(err)
-
-	test2, err := fst.Get(context.TODO(), "Hello")
-	log.Println("Test 2")
-	log.Println(test2)
-	log.Println(err)
+	err = fst.Delete(context.TODO(), "Hello")
 
 	// DEGUG SERVER
 	//log.Fatalln(server.ListenAndServe())
