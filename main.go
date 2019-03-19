@@ -29,13 +29,6 @@ func main() {
 		TLSConfig: cert.TLSConfig(),
 	}
 
-	fst := AutoCertFireStorm{
-		Client:     store,
-		Collection: "certsTest",
-	}
-
-	err = fst.Delete(context.TODO(), "Hello")
-
 	// DEGUG SERVER
 	//log.Fatalln(server.ListenAndServe())
 
