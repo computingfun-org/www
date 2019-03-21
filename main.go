@@ -1,5 +1,7 @@
 package main
 
+//go:generate go generate ./client
+
 import (
 	"context"
 	"log"
@@ -11,14 +13,10 @@ import (
 )
 
 func main() {
-
-	store, err := NewDataStore(context.TODO(), "credentials.json")
+	fsClient := NewFirestoreClientFatal(context.TODO(), "credentials.json")
 
 	cert := autocert.Manager{
-		Cache: AutoCertFireStorm{
-			Client:     store,
-			Collection: "certs",
-		},
+		Cache:      NewFirestoreCacheFatal(fsClient, "certs"),
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: autocert.HostWhitelist("www.computingfun.org"),
 		Email:      "security@computingfun.org",
@@ -37,6 +35,6 @@ func main() {
 		log.Fatalln(err)
 	}()
 
-	err = server.ListenAndServeTLS("", "")
+	err := server.ListenAndServeTLS("", "")
 	log.Fatalln(err)
 }
