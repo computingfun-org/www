@@ -36,7 +36,7 @@ func NewFirestoreCache(client *firestore.Client, collection string) *autocertcac
 
 // NewFirestoreCacheFatal ...
 func NewFirestoreCacheFatal(client *firestore.Client, collection string) *autocertcache.Firestore {
-	fsCache := autocertcache.NewFirestoreFromClient(client, collection)
+	fsCache := NewFirestoreCache(client, collection)
 	if fsCache == nil {
 		log.Fatalln("NewFirestoreCache returned nil in NewFirestoreCacheFatal.")
 	}
