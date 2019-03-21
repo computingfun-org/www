@@ -9,9 +9,8 @@ require (
 	github.com/mattn/go-sqlite3 v1.10.0
 	github.com/rakyll/statik v0.1.6
 	github.com/valyala/quicktemplate v1.0.2
-	gitlab.com/zacc/autocertcache v0.0.0-20190320235144-d050073d23d9
+	gitlab.com/zacc/autocertcache v0.0.0-20190321203627-5870b162d4b0
 	golang.org/x/crypto v0.0.0-20190320223903-b7391e95e576
 	golang.org/x/net v0.0.0-20190320064053-1272bf9dcd53
-	golang.org/x/sys v0.0.0-20190318195719-6c81ef8f67ca // indirect
 	google.golang.org/api v0.2.0
 )

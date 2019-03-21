@@ -12,10 +12,11 @@ type Article struct {
 
 // Author of an article.
 type Author struct {
-	User string
-	Name string
-	URL  string
-	Pic  string
+	User      string
+	FirstName string
+	LastName  string
+	SiteURL   string
+	PicURL    string
 }
 
 // ArticleStore is a storage interface for saving and getting Article records.
