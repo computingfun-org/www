@@ -18,10 +18,11 @@ func NewRouter() http.Handler {
 	h.GET("/games/:id", UnavailableHandler)
 
 	hfs, err := client.NewHTTPFileSystem()
-	if err != nil {
-		log.Fatal(err)
+	if err == nil {
+		h.ServeFiles("/client/*filepath", hfs)
+	} else {
+		log.Println(err)
 	}
-	h.ServeFiles("/client/*filepath", hfs)
 
 	h.NotFound = http.HandlerFunc(NotFoundHandler)
 	h.PanicHandler = PanicHandler
