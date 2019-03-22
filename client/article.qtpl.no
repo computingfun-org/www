@@ -1,6 +1,4 @@
-{% import "gitlab.com/computingfun/www/articles" %}
-
-{% code type ArticlePage articles.Article %}
+{% code type ArticlePage www.Article %}
 
 {% stripspace %}
 

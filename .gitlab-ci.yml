@@ -11,7 +11,6 @@ build:
     - go build -v -o cf-www
   artifacts:
     paths:
-      - cf.db
       - cf-www
 
 deploy:
@@ -31,7 +30,7 @@ deploy:
     - ssh-keyscan -H $SSH_DOMAIN >> ~/.ssh/known_hosts
     
     - ssh $SSH_USER@$SSH_DOMAIN systemctl stop cf-www
-    - scp cf-www cf.db $SSH_USER@$SSH_DOMAIN:$SSH_PATH
+    - scp cf-www $SSH_USER@$SSH_DOMAIN:$SSH_PATH
     - ssh $SSH_USER@$SSH_DOMAIN systemctl start cf-www
     - ssh $SSH_USER@$SSH_DOMAIN systemctl status cf-www
   only:
