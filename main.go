@@ -46,23 +46,28 @@ func main() {
 			log.Fatalln(err)
 		}
 
-		if AutoCertCacheCollection = client.Collection("certs"); AutoCertCacheCollection == nil {
+		AutoCertCacheCollection = client.Collection("certs")
+		if AutoCertCacheCollection == nil {
 			log.Fatalln("AutoCertCacheCollection is nil.")
 		}
 
-		if UserCollection = client.Collection("users"); AutoCertCacheCollection == nil {
+		UserCollection = client.Collection("users")
+		if AutoCertCacheCollection == nil {
 			log.Fatalln("UserCollection is nil.")
 		}
 
-		if AdminCollection = client.Collection("admins"); AutoCertCacheCollection == nil {
+		AdminCollection = client.Collection("admins")
+		if AutoCertCacheCollection == nil {
 			log.Fatalln("AdminCollection is nil.")
 		}
 
-		if AuthorCollection = client.Collection("authors"); AutoCertCacheCollection == nil {
+		AuthorCollection = client.Collection("authors")
+		if AutoCertCacheCollection == nil {
 			log.Fatalln("AuthorCollection is nil.")
 		}
 
-		if ArticleCollection = client.Collection("articles"); AutoCertCacheCollection == nil {
+		ArticleCollection = client.Collection("articles")
+		if AutoCertCacheCollection == nil {
 			log.Fatalln("ArticleCollection is nil.")
 		}
 	}
