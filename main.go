@@ -43,6 +43,26 @@ func GetCollectionFatal(client *firestore.Client, path string) *firestore.Collec
 }
 
 func main() {
+	router := httprouter.New()
+	router.GET("/", IndexHandler)
+	router.GET("/articles/", UnavailableHandler)
+	router.GET("/articles/:id", ArticleHandler)
+	router.GET("/games/", UnavailableHandler)
+	router.GET("/games/:id", UnavailableHandler)
+	router.NotFound = http.HandlerFunc(NotFoundHandler)
+	router.PanicHandler = PanicHandler
+
+	// add http file system to router
+	{
+		hfs, err := client.NewHTTPFileSystem()
+		if err != nil {
+			log.Fatalln(err)
+		}
+		router.ServeFiles("/client/*filepath", hfs)
+	}
+
+	//log.Fatalln(http.ListenAndServe("", router))
+
 	{
 		ctx := context.TODO()
 		options := option.WithCredentialsFile("credentials.json")
@@ -67,24 +87,6 @@ func main() {
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: autocert.HostWhitelist("www.computingfun.org", "beta.computingfun.org"),
 		Email:      "security@computingfun.org",
-	}
-
-	router := httprouter.New()
-	router.GET("/", IndexHandler)
-	router.GET("/articles/", UnavailableHandler)
-	router.GET("/articles/:id", ArticleHandler)
-	router.GET("/games/", UnavailableHandler)
-	router.GET("/games/:id", UnavailableHandler)
-	router.NotFound = http.HandlerFunc(NotFoundHandler)
-	router.PanicHandler = PanicHandler
-
-	// add http file system to router
-	{
-		hfs, err := client.NewHTTPFileSystem()
-		if err != nil {
-			log.Fatalln(err)
-		}
-		router.ServeFiles("/client/*filepath", hfs)
 	}
 
 	server := http.Server{
