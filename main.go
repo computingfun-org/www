@@ -33,6 +33,15 @@ var (
 	ArticleCollection *firestore.CollectionRef
 )
 
+// GetCollectionFatal ...
+func GetCollectionFatal(client *firestore.Client, path string) *firestore.CollectionRef {
+	c := client.Collection(path)
+	if c == nil {
+		log.Fatalln("GetCollectionFatal: Collection for " + path + "returned nil.")
+	}
+	return c
+}
+
 func main() {
 	{
 		ctx := context.TODO()
@@ -46,30 +55,11 @@ func main() {
 			log.Fatalln(err)
 		}
 
-		AutoCertCacheCollection = client.Collection("certs")
-		if AutoCertCacheCollection == nil {
-			log.Fatalln("AutoCertCacheCollection is nil.")
-		}
-
-		UserCollection = client.Collection("users")
-		if AutoCertCacheCollection == nil {
-			log.Fatalln("UserCollection is nil.")
-		}
-
-		AdminCollection = client.Collection("admins")
-		if AutoCertCacheCollection == nil {
-			log.Fatalln("AdminCollection is nil.")
-		}
-
-		AuthorCollection = client.Collection("authors")
-		if AutoCertCacheCollection == nil {
-			log.Fatalln("AuthorCollection is nil.")
-		}
-
-		ArticleCollection = client.Collection("articles")
-		if AutoCertCacheCollection == nil {
-			log.Fatalln("ArticleCollection is nil.")
-		}
+		AutoCertCacheCollection = GetCollectionFatal(client, "certs")
+		UserCollection = GetCollectionFatal(client, "users")
+		AdminCollection = GetCollectionFatal(client, "admins")
+		AuthorCollection = GetCollectionFatal(client, "authors")
+		ArticleCollection = GetCollectionFatal(client, "articles")
 	}
 
 	cert := autocert.Manager{
