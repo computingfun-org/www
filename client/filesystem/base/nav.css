@@ -10,11 +10,7 @@ nav {
 
 nav:hover {
   left: 0;
-  box-shadow: 0 0 20px 1px white;
-}
-
-nav:hover.dark-theme {
-  box-shadow: 20px 0 20px 1px;
+  box-shadow: 5px 0 20px 0;
 }
 
 /* remove default tag style */
@@ -101,4 +97,23 @@ nav div {
 
 nav.dark-theme div {
   background-color: #547524;
+}
+
+nav a :hover {
+  animation: example 1s;
+}
+
+@keyframes example {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(.5) rotate(-30deg);
+  }
+  50% {
+    transform: scale(1.5) rotate(50deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
