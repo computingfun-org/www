@@ -49,17 +49,9 @@ func main() {
 	router.GET("/articles/:id", ArticleHandler)
 	router.GET("/games/", UnavailableHandler)
 	router.GET("/games/:id", UnavailableHandler)
+	router.ServeFiles("/client/*filepath", client.NewHTTPFileSystemFatal())
 	router.NotFound = http.HandlerFunc(NotFoundHandler)
 	router.PanicHandler = PanicHandler
-
-	// add http file system to router
-	{
-		hfs, err := client.NewHTTPFileSystem()
-		if err != nil {
-			log.Fatalln(err)
-		}
-		router.ServeFiles("/client/*filepath", hfs)
-	}
 
 	//log.Fatalln(http.ListenAndServe("", router))
 
@@ -70,16 +62,16 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		client, err := app.Firestore(ctx)
+		fsclient, err := app.Firestore(ctx)
 		if err != nil {
 			log.Fatalln(err)
 		}
 
-		AutoCertCacheCollection = GetCollectionFatal(client, "certs")
-		UserCollection = GetCollectionFatal(client, "users")
-		AdminCollection = GetCollectionFatal(client, "admins")
-		AuthorCollection = GetCollectionFatal(client, "authors")
-		ArticleCollection = GetCollectionFatal(client, "articles")
+		AutoCertCacheCollection = GetCollectionFatal(fsclient, "certs")
+		UserCollection = GetCollectionFatal(fsclient, "users")
+		AdminCollection = GetCollectionFatal(fsclient, "admins")
+		AuthorCollection = GetCollectionFatal(fsclient, "authors")
+		ArticleCollection = GetCollectionFatal(fsclient, "articles")
 	}
 
 	cert := autocert.Manager{
