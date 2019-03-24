@@ -1,7 +1,6 @@
 "use strict";
 
-const DarkThemeClassListener = "dark-theme-tag";
-const DarkThemeClassTag = "dark-theme";
+const DarkThemeClass = "dark-theme";
 const DarkThemeStorageKey = "dark_theme";
 
 function DarkThemeLoad() {
@@ -13,27 +12,23 @@ function DarkThemeLoad() {
 }
 
 function DarkThemeToggle() {
-    if (localStorage.getItem(DarkThemeStorageKey) !== null) {
+    if (DarkThemeIsOn()) {
         DarkThemeOff();
     } else {
         DarkThemeOn();
     }
 }
 
+function DarkThemeIsOn() {
+    return document.body.classList.contains(DarkThemeClass);
+}
+
 function DarkThemeOn() {
-    let listeners = document.getElementsByClassName(DarkThemeClassListener);
-    let len = listeners.length;
-    for (let i = 0; i < len; i++) {
-        listeners[i].classList.add(DarkThemeClassTag);
-    }
+    document.body.classList.add(DarkThemeClass);
     localStorage.setItem(DarkThemeStorageKey, '');
 }
 
 function DarkThemeOff() {
-    let listeners = document.getElementsByClassName(DarkThemeClassListener);
-    let len = listeners.length;
-    for (let i = 0; i < len; i++) {
-        listeners[i].classList.remove(DarkThemeClassTag);
-    }
+    document.body.classList.remove(DarkThemeClass);
     localStorage.removeItem(DarkThemeStorageKey);
 }

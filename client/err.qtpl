@@ -42,7 +42,7 @@ var UnavailablePage = ErrPage{
 
 {% func (e ErrPage) body() %}
 <img class="icon" src="/client/ico/250r.png" alt="Computing Fun Error" height="250" width="250">
-<div class="message dark-theme-tag">
+<div class="message">
     {%s= e.Message %}
 </div>
 <div class="code">

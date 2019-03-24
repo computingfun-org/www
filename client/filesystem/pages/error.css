@@ -10,7 +10,7 @@
   font-size: large;
 }
 
-.message.dark-theme {
+.dark-theme .message {
   color: whitesmoke;
 }
 

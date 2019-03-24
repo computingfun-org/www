@@ -47,11 +47,11 @@ func StreamHTML(qw422016 *qt422016.Writer, p Page) {
 	//line page.qtpl:26
 	p.streamhead(qw422016)
 	//line page.qtpl:26
-	qw422016.N().S(`</head><body onload="DarkThemeLoad();" class="dark-theme-tag"><nav class="dark-theme-tag"><div class="nav-title dark-theme-tag">Computing Fun</div><img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50" class="nav-icon"><a id="nav-link-yt" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA" class="nav-link dark-theme-tag"><span>Channel</span><i class="nav-link-icon fab fa-youtube"></i></a><a id="nav-link-patron" href="https://www.patreon.com/computingfun" class="nav-link dark-theme-tag"><span>Patron</span><i class="nav-link-icon fab fa-patreon"></i></a><a id="nav-link-game" href="https://computingfun.org/games/" class="nav-link dark-theme-tag"><span>Games</span><i class="nav-link-icon fas fa-gamepad"></i></a><a id="nav-link-article" href="https://computingfun.org/articles/" class="nav-link dark-theme-tag"><span>Articles</span><i class="nav-link-icon far fa-newspaper"></i></a><a id="nav-link-twitch" href="#" class="nav-link dark-theme-tag"><span>Live</span><i class="nav-link-icon fab fa-twitch"></i></a><a id="nav-link-mode" href="#" onclick="DarkThemeToggle();" class="nav-link dark-theme-tag"><span> Mode</span><i class="nav-link-icon fas fa-palette"></i></a>`)
+	qw422016.N().S(`</head><body onload="DarkThemeLoad();"><nav><div class="nav-title">Computing Fun</div><img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50" class="nav-icon"><a id="nav-link-yt" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA" class="nav-link"><span>Channel</span><i class="nav-link-icon fab fa-youtube"></i></a><a id="nav-link-patron" href="https://www.patreon.com/computingfun" class="nav-link"><span>Patron</span><i class="nav-link-icon fab fa-patreon"></i></a><a id="nav-link-game" href="https://computingfun.org/games/" class="nav-link"><span>Games</span><i class="nav-link-icon fas fa-gamepad"></i></a><a id="nav-link-article" href="https://computingfun.org/articles/" class="nav-link"><span>Articles</span><i class="nav-link-icon far fa-newspaper"></i></a><a id="nav-link-twitch" href="#" class="nav-link"><span>Live</span><i class="nav-link-icon fab fa-twitch"></i></a><a id="nav-link-mode" href="#" onclick="DarkThemeToggle();" class="nav-link"><span> Mode</span><i class="nav-link-icon fas fa-palette"></i></a>`)
 	//line page.qtpl:38
 	p.streamnavLinks(qw422016)
 	//line page.qtpl:38
-	qw422016.N().S(`</nav><main class="dark-theme-tag">`)
+	qw422016.N().S(`</nav><main>`)
 	//line page.qtpl:41
 	p.streambody(qw422016)
 	//line page.qtpl:41

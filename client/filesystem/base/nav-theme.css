@@ -6,7 +6,7 @@ nav:hover {
   background-color: whitesmoke;
 }
 
-nav.dark-theme:hover {
+.dark-theme nav:hover {
   background-color: black;
 }
 
@@ -15,7 +15,7 @@ nav.dark-theme:hover {
   background-color: #8dc63f;
 }
 
-.nav-title.dark-theme {
+.dark-theme .nav-title {
   background-color: #547524;
 }
 
