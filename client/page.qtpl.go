@@ -43,44 +43,44 @@ type Page interface {
 //line page.qtpl:11
 func StreamHTML(qw422016 *qt422016.Writer, p Page) {
 	//line page.qtpl:11
-	qw422016.N().S(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="/client/ico/fav.ico"><link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png"><link rel="stylesheet" type="text/css" href="/client/base/body.css"><link rel="stylesheet" type="text/css" href="/client/base/nav.css"><link rel="stylesheet" type="text/css" href="/client/base/nav-link.css"><link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"><script src="/client/base/dark-theme.js" async defer></script>`)
-	//line page.qtpl:25
+	qw422016.N().S(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="/client/ico/fav.ico"><link rel="icon" type="image/png" href="/client/ico/192.png" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/client/ico/180.png"><link rel="stylesheet" type="text/css" href="/client/base/body.css"><link rel="stylesheet" type="text/css" href="/client/base/nav.css"><link rel="stylesheet" type="text/css" href="/client/base/nav-theme.css"><link rel="stylesheet" type="text/css" href="/client/base/nav-link.css"><link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"><script src="/client/base/dark-theme.js" async defer></script>`)
+	//line page.qtpl:26
 	p.streamhead(qw422016)
-	//line page.qtpl:25
-	qw422016.N().S(`</head><body onload="DarkThemeLoad();" class="dark-theme-tag"><nav class="dark-theme-tag"><div>Computing Fun</div><img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50"><a id="nav-link-yt" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA" class="dark-theme-tag"><span>Channel</span><i class="fab fa-youtube"></i></a><a id="nav-link-patron" href="https://www.patreon.com/computingfun" class="dark-theme-tag"><span>Patron</span><i class="fab fa-patreon"></i></a><a id="nav-link-game" href="https://computingfun.org/games/" class="dark-theme-tag"><span>Games</span><i class="fas fa-gamepad"></i></a><a id="nav-link-article" href="https://computingfun.org/articles/" class="dark-theme-tag"><span>Articles</span><i class="far fa-newspaper"></i></a><a id="nav-link-twitch" href="#" class="dark-theme-tag"><span>Live</span><i class="fab fa-twitch"></i></a><a id="nav-link-mode" href="#" onclick="DarkThemeToggle();" class="dark-theme-tag"><span> Mode</span><i class="fas fa-palette"></i></a>`)
-	//line page.qtpl:37
+	//line page.qtpl:26
+	qw422016.N().S(`</head><body onload="DarkThemeLoad();" class="dark-theme-tag"><nav class="dark-theme-tag"><div class="nav-title dark-theme-tag">Computing Fun</div><img src="/client/ico/50.png" alt="Computing Fun" height="50" width="50" class="nav-icon"><a id="nav-link-yt" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA" class="nav-link dark-theme-tag"><span>Channel</span><i class="nav-link-icon fab fa-youtube"></i></a><a id="nav-link-patron" href="https://www.patreon.com/computingfun" class="nav-link dark-theme-tag"><span>Patron</span><i class="nav-link-icon fab fa-patreon"></i></a><a id="nav-link-game" href="https://computingfun.org/games/" class="nav-link dark-theme-tag"><span>Games</span><i class="nav-link-icon fas fa-gamepad"></i></a><a id="nav-link-article" href="https://computingfun.org/articles/" class="nav-link dark-theme-tag"><span>Articles</span><i class="nav-link-icon far fa-newspaper"></i></a><a id="nav-link-twitch" href="#" class="nav-link dark-theme-tag"><span>Live</span><i class="nav-link-icon fab fa-twitch"></i></a><a id="nav-link-mode" href="#" onclick="DarkThemeToggle();" class="nav-link dark-theme-tag"><span> Mode</span><i class="nav-link-icon fas fa-palette"></i></a>`)
+	//line page.qtpl:38
 	p.streamnavLinks(qw422016)
-	//line page.qtpl:37
-	qw422016.N().S(`</nav><main>`)
-	//line page.qtpl:40
+	//line page.qtpl:38
+	qw422016.N().S(`</nav><main class="dark-theme-tag">`)
+	//line page.qtpl:41
 	p.streambody(qw422016)
-	//line page.qtpl:40
+	//line page.qtpl:41
 	qw422016.N().S(`</main></body></html>`)
-//line page.qtpl:44
+//line page.qtpl:45
 }
 
-//line page.qtpl:44
+//line page.qtpl:45
 func WriteHTML(qq422016 qtio422016.Writer, p Page) {
-	//line page.qtpl:44
+	//line page.qtpl:45
 	qw422016 := qt422016.AcquireWriter(qq422016)
-	//line page.qtpl:44
+	//line page.qtpl:45
 	StreamHTML(qw422016, p)
-	//line page.qtpl:44
+	//line page.qtpl:45
 	qt422016.ReleaseWriter(qw422016)
-//line page.qtpl:44
+//line page.qtpl:45
 }
 
-//line page.qtpl:44
+//line page.qtpl:45
 func HTML(p Page) string {
-	//line page.qtpl:44
+	//line page.qtpl:45
 	qb422016 := qt422016.AcquireByteBuffer()
-	//line page.qtpl:44
+	//line page.qtpl:45
 	WriteHTML(qb422016, p)
-	//line page.qtpl:44
+	//line page.qtpl:45
 	qs422016 := string(qb422016.B)
-	//line page.qtpl:44
+	//line page.qtpl:45
 	qt422016.ReleaseByteBuffer(qb422016)
-	//line page.qtpl:44
+	//line page.qtpl:45
 	return qs422016
-//line page.qtpl:44
+//line page.qtpl:45
 }

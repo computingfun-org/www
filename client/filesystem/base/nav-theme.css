@@ -1,0 +1,36 @@
+nav {
+  background-color: black;
+}
+
+nav:hover {
+  background-color: whitesmoke;
+}
+
+nav.dark-theme:hover {
+  background-color: black;
+}
+
+.nav-title {
+  color: white;
+  background-color: #8dc63f;
+}
+
+.nav-title.dark-theme {
+  background-color: #547524;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+}
+
+.nav-link-icon:hover {
+  animation: nav-link-icon-hover 1s;
+}
+
+@keyframes nav-link-icon-hover {
+  0% {transform: scale(1) rotate(0deg);}
+  25% {transform: scale(.5) rotate(-30deg);}
+  50% {transform: scale(1.5) rotate(50deg);}
+  100% {transform: scale(1) rotate(0deg);}
+}

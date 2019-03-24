@@ -13,13 +13,7 @@ nav:hover {
   box-shadow: 5px 0 20px 0;
 }
 
-/* remove default tag style */
-nav a, nav div {
-  text-decoration: none;
-  color: white;
-}
-
-nav img {
+.nav-icon {
   border-radius: 99px;
   background-color: inherit;
   position: absolute;
@@ -27,8 +21,7 @@ nav img {
   left: 235px;
 }
 
-/* button and text next to icon */
-nav div {
+.nav-title {
   display: inline-block;
   line-height: 50px;
   margin-top: 10px;
@@ -39,7 +32,7 @@ nav div {
   border-radius: 0px 5px 5px 0px;
 }
 
-nav a {
+.nav-link {
   font-size: large;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -52,68 +45,28 @@ nav a {
   white-space: nowrap;
 }
 
-/* link icons */
-nav a i {
+.nav-link-icon {
   float: right;
   box-sizing: content-box;
   padding: 5px;
   width: 25px;
 }
 
-nav a:hover {
+.nav-link:hover {
   padding-left: 50px;
 }
 
 /* smaller screens hide links while nav is close */
 @media only screen and (max-width: 600px) {
-  nav a {
+  .nav-link {
     width: 240px;
   }
 
-  nav:hover nav a {
+  nav:hover .nav-link {
     width: 275px;
   }
 
-  nav a:hover {
+  .nav-link:hover {
     padding-left: 0;
-  }
-}
-
-nav {
-  background-color: black;
-}
-
-nav:hover {
-  background-color: whitesmoke;
-}
-
-nav.dark-theme:hover {
-  background-color: black;
-}
-
-nav div {
-  background-color: #8dc63f;
-}
-
-nav.dark-theme div {
-  background-color: #547524;
-}
-
-nav a :hover {
-  animation: example 1s;
-}
-
-@keyframes example {
-  0% {
-    transform: scale(1) rotate(0deg);
-  }
-  25% {
-    transform: scale(.5) rotate(-30deg);
-  }
-  50% {
-    transform: scale(1.5) rotate(50deg);
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
   }
 }
