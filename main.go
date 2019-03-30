@@ -4,78 +4,51 @@ package main
 
 import (
 	"context"
+	"flag"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
-	"cloud.google.com/go/firestore"
-	firebase "firebase.google.com/go"
 	"github.com/julienschmidt/httprouter"
 	"gitlab.com/computingfun/www/client"
+	"gitlab.com/computingfun/www/firestoredb"
 	"gitlab.com/zacc/autocertcache"
 	"golang.org/x/crypto/acme/autocert"
-	"google.golang.org/api/option"
 )
-
-var (
-	// AutoCertCacheCollection ...
-	AutoCertCacheCollection *firestore.CollectionRef
-
-	// UserCollection ...
-	UserCollection *firestore.CollectionRef
-
-	// AdminCollection ...
-	AdminCollection *firestore.CollectionRef
-
-	// AuthorCollection ...
-	AuthorCollection *firestore.CollectionRef
-
-	// ArticleCollection ...
-	ArticleCollection *firestore.CollectionRef
-)
-
-// GetCollectionFatal ...
-func GetCollectionFatal(client *firestore.Client, path string) *firestore.CollectionRef {
-	c := client.Collection(path)
-	if c == nil {
-		log.Fatalln("GetCollectionFatal: Collection for " + path + "returned nil.")
-	}
-	return c
-}
 
 func main() {
+	installFlag := flag.Bool("install", false, "Install systemd service 💾 ")
+	flag.Parse()
+
+	if *installFlag {
+		log.Println("Installing systemd service 💾 :")
+		err := installService()
+		if err != nil {
+			log.Fatalln("\t-Failed ❌ : " + err.Error())
+		}
+		log.Println("\tSuccess ✔️ ")
+		os.Exit(0)
+	}
+
 	router := httprouter.New()
 	router.GET("/", IndexHandler)
 	router.GET("/articles/", UnavailableHandler)
 	router.GET("/articles/:id", ArticleHandler)
 	router.GET("/games/", UnavailableHandler)
 	router.GET("/games/:id", UnavailableHandler)
-	router.ServeFiles("/client/*filepath", client.NewHTTPFileSystemFatal())
+	if fs, err := client.NewHTTPFileSystem(); err != nil {
+		router.ServeFiles("/client/*filepath", fs)
+	}
 	router.NotFound = http.HandlerFunc(NotFoundHandler)
 	router.PanicHandler = PanicHandler
 
-	//log.Fatalln(http.ListenAndServe("", router))
-
-	{
-		ctx := context.TODO()
-		options := option.WithCredentialsFile("credentials.json")
-		app, err := firebase.NewApp(ctx, nil, options)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		fsclient, err := app.Firestore(ctx)
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		AutoCertCacheCollection = GetCollectionFatal(fsclient, "certs")
-		UserCollection = GetCollectionFatal(fsclient, "users")
-		AdminCollection = GetCollectionFatal(fsclient, "admins")
-		AuthorCollection = GetCollectionFatal(fsclient, "authors")
-		ArticleCollection = GetCollectionFatal(fsclient, "articles")
+	if err := firestoredb.Init(context.TODO(), "credentials.json"); err != nil {
+		log.Fatalln(err)
 	}
 
 	cert := autocert.Manager{
-		Cache:      autocertcache.NewFirestore(AutoCertCacheCollection),
+		Cache:      autocertcache.NewFirestore(firestoredb.AutoCertCache),
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: autocert.HostWhitelist("www.computingfun.org", "beta.computingfun.org"),
 		Email:      "security@computingfun.org",
@@ -85,6 +58,8 @@ func main() {
 		Handler:   router,
 		TLSConfig: cert.TLSConfig(),
 	}
+
+	log.Println("🌐")
 
 	go func() {
 		err := http.ListenAndServe("", cert.HTTPHandler(nil))
@@ -130,4 +105,20 @@ func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 		}
 		client.WriteHTML(w, client.ArticlePage(a))
 	*/
+}
+
+func installService() error {
+	path, err := os.Executable()
+	if err != nil {
+		return err
+	}
+
+	file := []byte(`[Unit]
+	Description=Computing Fun web server	
+	[Service]
+	ExecStart=` + path + `
+	[Install]
+	WantedBy=multi-user.target`)
+
+	return ioutil.WriteFile("/etc/systemd/system/cf-www.service", file, 0664)
 }
