@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/julienschmidt/httprouter"
 	"gitlab.com/computingfun/www/client"
@@ -113,12 +114,6 @@ func installService() error {
 		return err
 	}
 
-	file := []byte(`[Unit]
-	Description=Computing Fun web server	
-	[Service]
-	ExecStart=` + path + `
-	[Install]
-	WantedBy=multi-user.target`)
-
+	file := []byte("\n[Unit]\nDescription=Computing Fun web server.\n[Service]\nExecStart=" + path + "\nWorkingDirectory=" + filepath.Dir(path) + "\n[Install]\nWantedBy=multi-user.target")
 	return ioutil.WriteFile("/etc/systemd/system/cf-www.service", file, 0664)
 }
