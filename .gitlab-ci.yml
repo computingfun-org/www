@@ -29,6 +29,6 @@ deploy:
     - ssh $SSH_USER@$SSH_DOMAIN systemctl stop cf-www
     - scp cf-www $SSH_USER@$SSH_DOMAIN:$SSH_PATH
     - ssh $SSH_USER@$SSH_DOMAIN ./cf-www -install
-    - ssh $SSH_USER@$SSH_DOMAIN reboot
+    - ssh $SSH_USER@$SSH_DOMAIN systemctl start cf-www
   only:
     - master
