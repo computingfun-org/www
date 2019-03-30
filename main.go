@@ -23,12 +23,12 @@ func main() {
 	flag.Parse()
 
 	if *installFlag {
-		log.Println("Installing systemd service 💾 :")
+		log.Println("💾  Installing systemd service:")
 		err := installService()
 		if err != nil {
-			log.Fatalln("\t-Failed ❌ : " + err.Error())
+			log.Fatalln("\t❌  Failed: " + err.Error())
 		}
-		log.Println("\tSuccess ✔️ ")
+		log.Println("\t✔️  Success")
 		os.Exit(0)
 	}
 
@@ -85,7 +85,7 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 
 // PanicHandler is an adapter for ...
 func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
-	go log.Println("Panic: ", e, " | Request: ", r)
+	go log.Println("⚠️  Panic: ", e, " | Request: ", r)
 	w.WriteHeader(http.StatusInternalServerError)
 	client.WriteHTML(w, client.PanicPage)
 }
