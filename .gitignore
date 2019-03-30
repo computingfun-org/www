@@ -13,3 +13,6 @@
 
 # Bin folder
 bin/
+
+# Keeps secrets safe
+credentials.json
