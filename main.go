@@ -29,7 +29,7 @@ func main() {
 			log.Fatalln("\t❌  Failed: " + err.Error())
 		}
 		log.Println("\t✔️  Success")
-		os.Exit(0)
+		return
 	}
 
 	router := httprouter.New()
@@ -38,8 +38,13 @@ func main() {
 	router.GET("/articles/:id", ArticleHandler)
 	router.GET("/games/", UnavailableHandler)
 	router.GET("/games/:id", UnavailableHandler)
-	if fs, err := client.NewHTTPFileSystem(); err != nil {
-		router.ServeFiles("/client/*filepath", fs)
+	{
+		fs, err := client.NewHTTPFileSystem()
+		if err == nil {
+			router.ServeFiles("/client/*filepath", fs)
+		} else {
+			log.Println("⚠️  " + err.Error())
+		}
 	}
 	router.NotFound = http.HandlerFunc(NotFoundHandler)
 	router.PanicHandler = PanicHandler
@@ -85,7 +90,7 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 
 // PanicHandler is an adapter for ...
 func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
-	go log.Println("⚠️  Panic: ", e, " | Request: ", r)
+	go log.Println("🛑  Panic: ", e, " | Request: ", r)
 	w.WriteHeader(http.StatusInternalServerError)
 	client.WriteHTML(w, client.PanicPage)
 }
@@ -98,14 +103,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 // ArticleHandler responses with an article page for the article with id [:id].
 // If article is not found ArticleHandler responses with NotFoundHandler.
 func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	/*
-		a, err := ArticleStore.Get(p.ByName("id"))
-		if err != nil {
-			NotFoundHandler(w, r)
-			return
-		}
-		client.WriteHTML(w, client.ArticlePage(a))
-	*/
+	panic("ArticleHandler is not ready yet.")
 }
 
 func installService() error {
@@ -113,7 +111,6 @@ func installService() error {
 	if err != nil {
 		return err
 	}
-
 	file := []byte("\n[Unit]\nDescription=Computing Fun web server.\n[Service]\nExecStart=" + path + "\nWorkingDirectory=" + filepath.Dir(path) + "\n[Install]\nWantedBy=multi-user.target")
 	return ioutil.WriteFile("/etc/systemd/system/cf-www.service", file, 0664)
 }
