@@ -50,7 +50,7 @@ func main() {
 	router.PanicHandler = PanicHandler
 
 	if err := firestoredb.Init(context.TODO(), "credentials.json"); err != nil {
-		log.Fatalln(err)
+		log.Fatalln("🔑  " + err.Error())
 	}
 
 	cert := autocert.Manager{
