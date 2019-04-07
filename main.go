@@ -35,20 +35,11 @@ func main() {
 	router.GET("/articles/:id", ArticleHandler)
 	router.GET("/games/", UnavailableHandler)
 	router.GET("/games/:id", UnavailableHandler)
-	{
-		fs, err := client.NewHTTPFileSystem()
-		if err == nil {
-			router.ServeFiles("/client/*filepath", fs)
-		} else {
-			log.Println("⚠️  " + err.Error())
-		}
-	}
+	router.ServeFiles("/client/*filepath", client.NewHTTPFileSystemLogErr())
 	router.NotFound = http.HandlerFunc(NotFoundHandler)
 	router.PanicHandler = PanicHandler
 
-	if err := firestoredb.Init(context.TODO(), "credentials.json"); err != nil {
-		log.Fatalln("🔑  " + err.Error())
-	}
+	firestoredb.InitFatal(context.TODO(), "credentials.json")
 
 	cert := autocert.Manager{
 		Cache:      autocertcache.NewFirestore(firestoredb.AutoCertCache),

@@ -2,6 +2,7 @@ package firestoredb
 
 import (
 	"context"
+	"log"
 
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
@@ -24,6 +25,13 @@ var (
 	// Article ...
 	Article *firestore.CollectionRef
 )
+
+// InitFatal ...
+func InitFatal(ctx context.Context, credentialsFile string) {
+	if err := Init(ctx, credentialsFile); err != nil {
+		log.Fatalln("🔑  " + err.Error())
+	}
+}
 
 // Init ...
 func Init(ctx context.Context, credentialsFile string) error {
