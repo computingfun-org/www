@@ -5,11 +5,10 @@ package main
 import (
 	"context"
 	"flag"
-	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
-	"path/filepath"
+
+	"gitlab.com/computingfun/www/systemd"
 
 	"github.com/julienschmidt/httprouter"
 	"gitlab.com/computingfun/www/client"
@@ -19,18 +18,9 @@ import (
 )
 
 func main() {
-	installFlag := flag.Bool("install", false, "Install systemd service 💾 ")
 	flag.Parse()
 
-	if *installFlag {
-		log.Println("💾  Installing systemd service:")
-		err := installService()
-		if err != nil {
-			log.Fatalln("\t❌  Failed: " + err.Error())
-		}
-		log.Println("\t✔️  Success")
-		return
-	}
+	systemd.InstallMain()
 
 	router := httprouter.New()
 	router.GET("/", IndexHandler)
@@ -104,13 +94,4 @@ func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 // If article is not found ArticleHandler responses with NotFoundHandler.
 func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	panic("ArticleHandler is not ready yet.")
-}
-
-func installService() error {
-	path, err := os.Executable()
-	if err != nil {
-		return err
-	}
-	file := []byte("\n[Unit]\nDescription=Computing Fun web server.\n[Service]\nExecStart=" + path + "\nWorkingDirectory=" + filepath.Dir(path) + "\n[Install]\nWantedBy=multi-user.target")
-	return ioutil.WriteFile("/etc/systemd/system/cf-www.service", file, 0664)
 }
