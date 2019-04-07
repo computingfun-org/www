@@ -7,6 +7,7 @@ import (
 	"flag"
 	"log"
 	"net/http"
+	"os"
 
 	"gitlab.com/computingfun/www/systemd"
 
@@ -16,6 +17,12 @@ import (
 	"gitlab.com/zacc/autocertcache"
 	"golang.org/x/crypto/acme/autocert"
 )
+
+func init() {
+	// opt-in for TLS 1.3 for Go 1.12
+	// https://golang.org/pkg/crypto/tls/
+	os.Setenv("GODEBUG", os.Getenv("GODEBUG")+",tls13=1")
+}
 
 func main() {
 	flag.Parse()
