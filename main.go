@@ -5,10 +5,11 @@ package main
 import (
 	"context"
 	"flag"
+	"io/ioutil"
 	"log"
 	"net/http"
-
-	"gitlab.com/computingfun/www/systemd"
+	"os"
+	"path/filepath"
 
 	"github.com/julienschmidt/httprouter"
 	"gitlab.com/computingfun/www/client"
@@ -17,10 +18,33 @@ import (
 	"golang.org/x/crypto/acme/autocert"
 )
 
+// InstallFlag is the systemd installer flag.
+var InstallFlag *bool
+
+func init() {
+	InstallFlag = flag.Bool("systemd", false, "Install systemd service 💾 ")
+}
+
 func main() {
 	flag.Parse()
 
-	systemd.InstallMain()
+	// Handles installing systemd service if InstallFlag is set.
+	if *InstallFlag {
+		log.Println("💾  Installing systemd service:")
+		path, err := os.Executable()
+		if err != nil {
+			log.Println("\t❌  Failed: Unable to find path: " + err.Error())
+			os.Exit(1)
+		}
+		file := []byte("\n[Unit]\nDescription=Computing Fun web server\n[Service]\nExecStart=" + path + "\nWorkingDirectory=" + filepath.Dir(path) + "\n[Install]\nWantedBy=multi-user.target")
+		err = ioutil.WriteFile("/etc/systemd/system/cf-www.service", file, 0664)
+		if err != nil {
+			log.Println("\t❌  Failed: Unable to write file: " + err.Error())
+			os.Exit(1)
+		}
+		log.Println("\t✔️  Success")
+		os.Exit(0)
+	}
 
 	router := httprouter.New()
 	router.GET("/", IndexHandler)
@@ -32,7 +56,9 @@ func main() {
 	router.NotFound = http.HandlerFunc(NotFoundHandler)
 	router.PanicHandler = PanicHandler
 
-	firestoredb.InitFatal(context.TODO(), "credentials.json")
+	if err := firestoredb.Init(context.TODO(), "credentials.json"); err != nil {
+		log.Fatalln("🔑  " + err.Error())
+	}
 
 	cert := autocert.Manager{
 		Cache:      autocertcache.NewFirestore(firestoredb.AutoCertCache),
@@ -55,34 +81,4 @@ func main() {
 
 	err := server.ListenAndServeTLS("", "")
 	log.Fatalln(err)
-}
-
-// UnavailableHandler is an adapter for ...
-func UnavailableHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	w.WriteHeader(http.StatusServiceUnavailable)
-	client.WriteHTML(w, client.UnavailablePage)
-}
-
-// NotFoundHandler is an adapter for ...
-func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotFound)
-	client.WriteHTML(w, client.NotFoundPage)
-}
-
-// PanicHandler is an adapter for ...
-func PanicHandler(w http.ResponseWriter, r *http.Request, e interface{}) {
-	go log.Println("🛑  Panic: ", e, " | Request: ", r)
-	w.WriteHeader(http.StatusInternalServerError)
-	client.WriteHTML(w, client.PanicPage)
-}
-
-// IndexHandler responses with the home page.
-func IndexHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	client.WriteHTML(w, client.IndexPage{})
-}
-
-// ArticleHandler responses with an article page for the article with id [:id].
-// If article is not found ArticleHandler responses with NotFoundHandler.
-func ArticleHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	panic("ArticleHandler is not ready yet.")
 }
