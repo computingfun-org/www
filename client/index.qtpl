@@ -12,8 +12,8 @@
 <div class="nav-boxes">
     <a style="background-color: #ff0000;" href="https://www.youtube.com/channel/UCeZQbACMihORscFIwmydpzA"><i class="fab fa-youtube"></i></a>
     <a style="background-color: #f85944;" href="https://www.patreon.com/computingfun"><i class="fab fa-patreon"></i></a>
-    <a style="background-color: #171A21;" href="https://computingfun.org/games/"><i class="fas fa-gamepad"></i></a>
-    <a style="background-color: #77ab59;" href="https://computingfun.org/articles/"><i class="far fa-newspaper"></i></a>
+    <a style="background-color: #171A21;" href="https://www.computingfun.org/games/"><i class="fas fa-gamepad"></i></a>
+    <a style="background-color: #77ab59;" href="https://www.computingfun.org/articles/"><i class="far fa-newspaper"></i></a>
     <a style="background-color: #6441A4;" href="#"><i class="fab fa-twitch"></i></a>
 </div>
 {% endfunc %}
